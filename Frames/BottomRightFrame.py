@@ -76,5 +76,7 @@ class BottomRightFrame:
         self.app.prepare_file()
 
         # Now we update our hierarchy:
+        self.app.left_frame.destroy_frame_objects()
+
         self.app.left_frame.create_hierarchy()
         self.app.left_frame.render_frame_objects()

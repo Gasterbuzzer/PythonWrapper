@@ -56,7 +56,7 @@ class LeftFrame:
 
             group_index = f"NoGroup"
             for e in group_app.keys():
-                if e == "Union":
+                if e.lower() == "union":
                     group_index = f"Group{index}"
 
                     # Create Group in Hierarchy (For now at least, later we look into it further)
@@ -138,7 +138,7 @@ class LeftFrame:
                         self.app.hierarchy.append({"sphere": Sphere(position, radius, color, i)})
                         print(f"H: {self.app.hierarchy}")
 
-                else:
+                elif object_name == "scaling":
                     print(f"Current Unknown Object: {object_app}")
 
         # Now that we have loaded each object into memory, we can try rendering.
@@ -180,6 +180,9 @@ class LeftFrame:
 
                 index_row += 1
                 continue
+
+            else:
+                print(f"Group Name: {group_name}")
 
             # Create the Frame
             new_frame_group = customtkinter.CTkFrame(master=self.hierarchy_frame)
@@ -223,3 +226,13 @@ class LeftFrame:
                 index_row += 2
 
         index_row += 1
+
+    def destroy_frame_objects(self) -> None:
+        """
+        Destroy all Objects
+        """
+        for object_app in self.hierarchy_render:
+            object_app.destroy()
+
+        self.app.hierarchy = []
+        self.hierarchy_render = []
