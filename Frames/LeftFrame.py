@@ -13,20 +13,34 @@ class LeftFrame:
 
         self.app = main_menu_reference
 
+        # Frames
         self.frame = customtkinter.CTkFrame(main_menu_reference.app)
         self.frame.configure(border_width=2, height=790, width=400)
         self.frame.grid(row=0, column=0, padx=5, pady=5, sticky="nws", rowspan=3)
         self.frame.grid_propagate(False)
 
-        self.inside_frame = customtkinter.CTkFrame(master=self.frame)
-        self.inside_frame.configure(border_width=2, height=38, width=390)
-        self.inside_frame.grid(row=0, column=0, padx=(5, 0), pady=5)
-        self.inside_frame.grid_propagate(False)
+        self.inside_frame_top = customtkinter.CTkFrame(master=self.frame)
+        self.inside_frame_top.configure(border_width=2, height=38, width=390)
+        self.inside_frame_top.grid(row=0, column=0, padx=(5, 0), pady=5)
+        self.inside_frame_top.grid_propagate(False)
 
-        self.title = customtkinter.CTkLabel(self.inside_frame, font=("Franklin Gothic Medium", 22), height=30,
+        # Title for Frame
+        self.title = customtkinter.CTkLabel(self.inside_frame_top, font=("Franklin Gothic Medium", 22), height=30,
                                             width=370, text="Hierarchy")
         self.title.grid(row=0, column=0, padx=5, pady=5)
         self.title.grid_propagate(False)
+
+        # Frame for Hierarchy (We will make it scrollable later.)
+        self.hierarchy_frame = customtkinter.CTkFrame(master=self.frame)
+        self.hierarchy_frame.configure(border_width=2, height=672, width=390)
+        self.hierarchy_frame.grid(row=1, column=0, padx=(5, 0), pady=(5, 0), sticky="nsew")
+        self.hierarchy_frame.grid_propagate(False)
+
+        # Frame for Buttons
+        self.button_frame = customtkinter.CTkFrame(master=self.frame)
+        self.button_frame.configure(border_width=2, height=55, width=390)
+        self.button_frame.grid(row=2, column=0, padx=(5, 0), pady=(5, 0), sticky="s")
+        self.button_frame.grid_propagate(False)
 
         # Hierarchy
         self.hierarchy_render = []
@@ -121,3 +135,9 @@ class LeftFrame:
 
         # Now that we have loaded each object into memory, we can try rendering.
         print("\n")
+
+    def render_frame_objects(self) -> None:
+        """
+        Renders the created objects. (!!!Must be created beforehand!!!)
+        """
+        return

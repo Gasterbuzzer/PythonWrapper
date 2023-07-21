@@ -77,3 +77,4 @@ class BottomRightFrame:
 
         # Now we update our hierarchy:
         self.app.left_frame.create_hierarchy()
+        self.app.left_frame.render_frame_objects()
