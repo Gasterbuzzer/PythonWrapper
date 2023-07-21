@@ -24,6 +24,8 @@ class MainWindow:
         self.sources = {}
         self.objects = {}
 
+        self.hierarchy = []
+
         self.app = customtkinter.CTk()
 
         self.width = 1200
@@ -67,9 +69,9 @@ class MainWindow:
         # First, we try to load the medium.
         try:
             self.medium = self.json_file["medium"]
-            print("Debug Log: Found Medium Settings")
+            print("\nDebug Log: Found Medium Settings")
         except KeyError:
-            print("Error Log: Medium does not exist in file.")
+            print("\nError Log: Medium does not exist in file.")
 
         # Now the sources
         try:
@@ -84,6 +86,8 @@ class MainWindow:
             print("Debug Log: Found Objects Settings")
         except KeyError:
             print("Error Log: Objects does not exist in file.")
+
+        print("\n")
 
 
 if __name__ == '__main__':

@@ -29,7 +29,7 @@ class LeftFrame:
         self.title.grid_propagate(False)
 
         # Hierarchy
-        self.hierarchy = []
+        self.hierarchy_render = []
 
     def create_hierarchy(self) -> None:
         """
@@ -43,7 +43,7 @@ class LeftFrame:
             group_index = f"Group{index}"
 
             # Create Group in Hierarchy (For now at least, later we look into it further)
-            self.hierarchy.append({group_index: {}})
+            self.app.hierarchy.append({group_index: {}})
 
             # Now we append the objects.
             for object_name, object_app in group_app.items():
@@ -113,10 +113,11 @@ class LeftFrame:
                         print(f"Error Log: Sphere Index for {group_index} is not given.")
                         i = None
 
-                    self.hierarchy[index][group_index] = Sphere(position, radius, color, i)
-                    # print(self.hierarchy[index][group_index])
+                    self.app.hierarchy[index][group_index] = Sphere(position, radius, color, i)
+                    # print(self.app.hierarchy[index][group_index])
 
                 else:
                     print(f"Current Unknown Object: {object_app}")
 
-        # Now that we have loaded each object into memory, we try rendering.
+        # Now that we have loaded each object into memory, we can try rendering.
+        print("\n")
