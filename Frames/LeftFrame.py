@@ -142,14 +142,20 @@ class LeftFrame:
         """
 
         for index, group in enumerate(self.app.hierarchy):
+            # Get the Name of group
+            group_name = "Could not get Name."
+            for name in group.keys():
+                group_name: str = name
+
             # Create the Frame
+            print(group)
             new_frame_group = customtkinter.CTkFrame(master=self.hierarchy_frame)
             new_frame_group.configure(border_width=2, height=38, width=380)
             new_frame_group.grid(row=index, column=0, padx=(5, 0), pady=5)
             new_frame_group.grid_propagate(False)
 
             # Frame Name:
-            new_group_name = customtkinter.CTkLabel(new_frame_group, height=30, width=370, text=group)
+            new_group_name = customtkinter.CTkLabel(new_frame_group, height=30, width=370, text=group_name)
             new_group_name.grid(row=0, column=0, padx=5, pady=5)
             new_group_name.grid_propagate(False)
 
