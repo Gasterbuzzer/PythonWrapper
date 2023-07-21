@@ -23,6 +23,7 @@ class MainWindow:
         self.medium = {}
         self.sources = {}
         self.objects = {}
+        self.screen = {}
 
         self.hierarchy = []
 
@@ -87,6 +88,11 @@ class MainWindow:
             print("Debug Log: Found Objects Settings")
         except KeyError:
             print("Error Log: Objects does not exist in file.")
+        try:
+            self.objects = self.json_file["screen"]
+            print("Debug Log: Found Screen Settings")
+        except KeyError:
+            print("Error Log: Screen does not exist in file.")
 
         print("\n")
 
