@@ -140,24 +140,56 @@ class LeftFrame:
         """
         Renders the created objects. (!!!Must be created beforehand!!!)
         """
+        index_row = 0
+        width_row = 360
+        child_modifier_size = 40
 
         for index, group in enumerate(self.app.hierarchy):
+
             # Get the Name of group
             group_name = "Could not get Name."
             for name in group.keys():
                 group_name: str = name
 
             # Create the Frame
-            print(group)
             new_frame_group = customtkinter.CTkFrame(master=self.hierarchy_frame)
-            new_frame_group.configure(border_width=2, height=38, width=380)
-            new_frame_group.grid(row=index, column=0, padx=(5, 0), pady=5)
+            new_frame_group.configure(border_width=2, height=38, width=width_row)
+            new_frame_group.grid(row=index_row, column=0, padx=(5, 0), pady=5)
             new_frame_group.grid_propagate(False)
 
             # Frame Name:
-            new_group_name = customtkinter.CTkLabel(new_frame_group, height=30, width=370, text=group_name)
+            new_group_name = customtkinter.CTkLabel(new_frame_group, height=30, width=width_row-30, text=group_name)
             new_group_name.grid(row=0, column=0, padx=5, pady=5)
             new_group_name.grid_propagate(False)
 
             self.hierarchy_render.append(new_frame_group)
 
+            # Now for each group we render their respective objects (for now only the name)
+            for group_member in group.values():
+
+                # We set the parent of the member
+                parent = group_name
+
+                # We adapt to a type of object
+                if type(group_member) is Sphere:
+                    name = "Sphere"
+                else:
+                    name = "Unknown Type"
+
+                # Create the Frame
+                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
+                new_frame_member.configure(border_width=2, height=38, width=width_row-child_modifier_size)
+                new_frame_member.grid(row=index_row+1, column=0, padx=(45, 0), pady=5)
+                new_frame_member.grid_propagate(False)
+
+                # Frame Name:
+                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
+                                                          width=width_row-child_modifier_size-30, text=name)
+                new_group_member.grid(row=0, column=0, padx=5, pady=5)
+                new_group_member.grid_propagate(False)
+
+                self.hierarchy_render.append(new_frame_member)
+
+                index_row += 2
+
+        index_row += 1
