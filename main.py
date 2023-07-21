@@ -51,6 +51,7 @@ class MainWindow:
         """
         Main Loop of Main Window (Use this to start it)
         """
+        print("Debug Log: Starting Main Window.")
         self.app.mainloop()
 
     def load_file(self) -> None:
