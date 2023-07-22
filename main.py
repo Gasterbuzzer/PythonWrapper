@@ -87,26 +87,26 @@ class MainWindow:
             self.medium = self.json_file["medium"]
             print("\nDebug Log: Found Medium Settings")
         except KeyError:
-            print("\nError Log: Medium does not exist in file.")
+            print("\nWeak Error Log: Medium does not exist in file.")
 
         # Now the sources
         try:
             self.sources = self.json_file["sources"]
             print("Debug Log: Found Sources Settings")
         except KeyError:
-            print("Error Log: Sources does not exist in file.")
+            print("Weak Error Log: Sources does not exist in file.")
 
         # Now the objects
         try:
             self.objects = self.json_file["objects"]
             print("Debug Log: Found Objects Settings")
         except KeyError:
-            print("Error Log: Objects does not exist in file.")
+            print("Important Error Log: Objects does not exist in file.")
         try:
             self.objects = self.json_file["screen"]
             print("Debug Log: Found Screen Settings")
         except KeyError:
-            print("Error Log: Screen does not exist in file.")
+            print("Weak Error Log: Screen does not exist in file.")
 
         # Now we hope we have extracted everything.
 
