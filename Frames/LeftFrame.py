@@ -52,97 +52,153 @@ class LeftFrame:
 
         # We have different Object Groups, we then go through each group and read the objects.
         for index, group_app in enumerate(self.app.objects):
-            # print(f"{group_app}\n")
-
-            group_index = f"NoGroup"
-            for e in group_app.keys():
-                if e.lower() == "union":
-                    group_index = f"Group{index}"
-
-                    # Create Group in Hierarchy (For now at least, later we look into it further)
-                    self.app.hierarchy.append({group_index: {}})
-                else:
-                    group_index = f"NoGroup"
-
-            # Now we append the objects.
-            for object_name, object_app in group_app.items():
-
-                if object_name == "sphere":
-                    # Try getting the info of the object
-
-                    try:
-                        position = object_app["position"]
-                    except KeyError:
-                        print(f"Error Log: Sphere Position for {group_index} is not given.")
-                        position = None
-
-                    try:
-                        radius = object_app["radius"]
-                    except KeyError:
-                        print(f"Error Log: Sphere Radius for {group_index} is not given.")
-                        radius = None
-
-                    try:
-                        color_json = object_app["color"]
-                        # Now that we have the color, we must convert it to a functioning object. :(
-
-                        try:
-                            color_ambient = color_json["ambient"]
-                        except KeyError:
-                            print(f"Error Log: Color Ambient for {object_app} {group_index} is not given.")
-                            color_ambient = None
-                        try:
-                            color_diffuse = color_json["diffuse"]
-                        except KeyError:
-                            print(f"Error Log: Color Diffuse for {object_app} {group_index} is not given.")
-                            color_diffuse = None
-                        try:
-                            color_specular = color_json["specular"]
-                        except KeyError:
-                            print(f"Error Log: Color Specular for {object_app} {group_index} is not given.")
-                            color_specular = None
-                        try:
-                            color_reflected = color_json["reflected"]
-                        except KeyError:
-                            print(f"Error Log: Color Reflected for {object_app} {group_index} is not given.")
-                            color_reflected = None
-                        try:
-                            color_refracted = color_json["refracted"]
-                        except KeyError:
-                            print(f"Error Log: Color Refracted for {object_app} {group_index} is not given.")
-                            color_refracted = None
-                        try:
-                            color_shininess = color_json["shininess"]
-                        except KeyError:
-                            print(f"Error Log: Color Shininess for {object_app} {group_index} is not given.")
-                            color_shininess = None
-
-                        # Create Object
-                        color = Color(color_ambient, color_diffuse, color_specular, color_reflected,
-                                      color_refracted, color_shininess)
-                        # Now we have the object, we continue
-
-                    except KeyError:
-                        print(f"Error Log: Sphere Color for {group_index} is not given.")
-                        color = None
-
-                    try:
-                        i = object_app["index"]
-                    except KeyError:
-                        print(f"Error Log: Sphere Index for {group_index} is not given.")
-                        i = None
-
-                    if group_index != "NoGroup":
-                        self.app.hierarchy[index][group_index] = Sphere(position, radius, color, i)
-                    else:
-                        self.app.hierarchy.append({"sphere": Sphere(position, radius, color, i)})
-                        print(f"H: {self.app.hierarchy}")
-
-                elif object_name == "scaling":
-                    print(f"Current Unknown Object: {object_app}")
+            print(f"{self.recurse_over_app(group_app)}\n")
 
         # Now that we have loaded each object into memory, we can try rendering.
         print("\n")
+
+    def recurse_over_app(self, object_app, object_name="NoNameGiven", group_index="Recursive Function",
+                         _index_possibly_given="", debug=False) -> dict:
+        """
+        Recurses over objects and gets, the according objects.
+        """
+
+        index_possibly_given = _index_possibly_given
+
+        # Find out the name
+        if object_name == "NoNameGiven":
+            for name in object_app.keys():
+                if debug:
+                    print("Object Name: " + name + "\n")
+                if name.lower() == "index":
+                    index_possibly_given = name
+                else:
+                    object_name = name
+
+        # Loop Now
+        if object_name.lower() == "sphere":
+            object_app = object_app["sphere"]
+            try:
+                position = object_app["position"]
+            except KeyError:
+                print(f"Error Log: Sphere Position for {group_index} is not given.")
+                position = None
+
+            try:
+                radius = object_app["radius"]
+            except KeyError:
+                print(f"Error Log: Sphere Radius for {group_index} is not given.")
+                radius = None
+
+            try:
+                color_json = object_app["color"]
+                # Now that we have the color, we must convert it to a functioning object. :(
+
+                try:
+                    color_ambient = color_json["ambient"]
+                except KeyError:
+                    print(f"Error Log: Color Ambient for {object_app} {group_index} is not given.")
+                    color_ambient = None
+                try:
+                    color_diffuse = color_json["diffuse"]
+                except KeyError:
+                    print(f"Error Log: Color Diffuse for {object_app} {group_index} is not given.")
+                    color_diffuse = None
+                try:
+                    color_specular = color_json["specular"]
+                except KeyError:
+                    print(f"Error Log: Color Specular for {object_app} {group_index} is not given.")
+                    color_specular = None
+                try:
+                    color_reflected = color_json["reflected"]
+                except KeyError:
+                    print(f"Error Log: Color Reflected for {object_app} {group_index} is not given.")
+                    color_reflected = None
+                try:
+                    color_refracted = color_json["refracted"]
+                except KeyError:
+                    print(f"Error Log: Color Refracted for {object_app} {group_index} is not given.")
+                    color_refracted = None
+                try:
+                    color_shininess = color_json["shininess"]
+                except KeyError:
+                    print(f"Error Log: Color Shininess for {object_app} {group_index} is not given.")
+                    color_shininess = None
+
+                # Create Object
+                color = Color(color_ambient, color_diffuse, color_specular, color_reflected,
+                              color_refracted, color_shininess)
+                # Now we have the object, we continue
+
+            except KeyError:
+                print(f"Error Log: Sphere Color for {group_index} is not given.")
+                color = None
+
+            try:
+                if index_possibly_given == "":
+                    i = object_app["index"]
+                else:
+                    i = index_possibly_given
+            except KeyError:
+                print(f"Error Log: Sphere Index for {group_index} is not given.")
+                i = None
+
+            return {"sphere": Sphere(position, radius, color, i)}
+
+        elif object_name.lower() == "union":
+
+            union_elements = []
+
+            for _e in object_app["union"]:
+
+                # Getting Object Name
+                _e_name = "NoNameFoundRecursive"
+                for name in _e:
+                    _e_name = name
+
+                if _e_name != "index":
+                    union_elements.append(self.recurse_over_app(_e, _e_name))
+
+            return {"Group": union_elements}
+
+        elif object_name.lower() == "translation":
+
+            new_recursive_object = object_app["translation"]["subject"]
+
+            # Getting Object Name
+            new_recursive_object_name = "NoNameFoundRecursive"
+            for name in new_recursive_object:
+
+                if name.lower() == "index":
+                    index_possibly_given = name
+                else:
+                    new_recursive_object_name = name
+
+            return self.recurse_over_app(new_recursive_object, new_recursive_object_name,
+                                         _index_possibly_given=index_possibly_given)
+
+        elif object_name.lower() == "scaling":
+
+            new_recursive_object = object_app["scaling"]["subject"]
+
+            # Getting Object Name
+            new_recursive_object_name = "NoNameFoundRecursive"
+            for name in new_recursive_object:
+
+                if name.lower() == "index":
+                    index_possibly_given = name
+                else:
+                    new_recursive_object_name = name
+
+            return self.recurse_over_app(new_recursive_object, new_recursive_object_name,
+                                         _index_possibly_given=index_possibly_given)
+
+        elif object_name.lower() == "halfspace":
+
+            return {"ObjectNotImplemented": object_name}
+
+        else:
+            return {"ObjectNotFound": object_name}
 
     def render_frame_objects(self) -> None:
         """
@@ -207,6 +263,7 @@ class LeftFrame:
                 if type(group_member) is Sphere:
                     name = "Sphere"
                 else:
+                    print(f"List: {group_member}")
                     name = "Unknown Type"
 
                 # Create the Frame
