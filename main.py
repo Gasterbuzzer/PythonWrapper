@@ -12,11 +12,18 @@ from Frames.MiddleRightFrame import MiddleRightFrame
 
 class MainWindow:
     """
-    Main Window
+    Main Window Class
     """
 
     def __init__(self) -> None:
+        """
+        Main Window Class.
+
+        Does not require any parameters.
+        """
+
         # Empty Dictionary for the File later.
+
         self.json_file = {}
         self.file_location = ""
 
@@ -26,6 +33,8 @@ class MainWindow:
         self.screen = {}
 
         self.hierarchy = []
+
+        # App Settings:
 
         self.app = customtkinter.CTk()
 
@@ -52,13 +61,17 @@ class MainWindow:
         """
         Main Loop of Main Window (Use this to start it)
         """
+
         print("Debug Log: Starting Main Window.")
         self.app.mainloop()
 
     def load_file(self) -> None:
         """
-        Loads the file into memory from the given path.
+        Loads the file into memory from the stored path.
+
+        Requires having the self.file_location to be set.
         """
+
         print("Debug Log: Loading file given.")
 
         with open(self.file_location, "r") as f:
@@ -68,6 +81,7 @@ class MainWindow:
         """
         Prepares input file for further usage. Requires the file to be loaded.
         """
+
         # First, we try to load the medium.
         try:
             self.medium = self.json_file["medium"]
@@ -94,9 +108,14 @@ class MainWindow:
         except KeyError:
             print("Error Log: Screen does not exist in file.")
 
+        # Now we hope we have extracted everything.
+
         print("\n")
 
 
+# Main Function
 if __name__ == '__main__':
+
+    # Create the Window Object and run it.
     app = MainWindow()
     app.main_loop()

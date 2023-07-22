@@ -10,7 +10,13 @@ class LeftFrame:
     """
 
     def __init__(self, main_menu_reference) -> None:
+        """
+        Left Frame Class (Hierarchy)
 
+        :param main_menu_reference: Reference to Main Class (Not the Main Window)
+        """
+
+        # References
         self.app = main_menu_reference
 
         # Frames
@@ -73,6 +79,7 @@ class LeftFrame:
         Recurses over objects and gets, the according objects.
         """
 
+        # It could happen that the index it outside for some odd reason, we so will try to deal with it like this.
         index_possibly_given = _index_possibly_given
 
         # Find out the name
@@ -85,7 +92,7 @@ class LeftFrame:
                 else:
                     object_name = name
 
-        # Loop Now
+        # Now we recurse over the objects and try to get everything:
         if object_name.lower() == "sphere":
             object_app = object_app["sphere"]
             try:
@@ -214,10 +221,13 @@ class LeftFrame:
         """
         Renders the created objects. (!!!Must be created beforehand!!!)
         """
+
+        # CONSTANTS
         index_row = 0
         width_row = 360
         child_modifier_size = 40
 
+        # Now we try drawing every element:
         for index, group in enumerate(self.app.hierarchy):
 
             # Get the Name of group
@@ -297,7 +307,10 @@ class LeftFrame:
     def destroy_frame_objects(self) -> None:
         """
         Destroy all Objects
+
+        This is just to make sure nothing stays when we load another file.
         """
+
         for object_app in self.hierarchy_render:
             object_app.destroy()
 

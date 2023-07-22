@@ -7,10 +7,16 @@ import os
 
 class BottomRightFrame:
     """
-        Bottom Right Frame Class
+    Bottom Right Frame Class
     """
 
     def __init__(self, main_menu_reference) -> None:
+        """
+        Bottom Right Frame Class (Load and Save functions)
+
+        :param main_menu_reference: Reference to Main Class (Not the Main Window)
+        """
+
         # References
         self.app = main_menu_reference
 
@@ -51,6 +57,7 @@ class BottomRightFrame:
         Prompts the user for a json file.
         :return: (Str) Absolute Path to file.
         """
+
         # Request Input
         json_location = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select Scene JSON",
                                                    filetypes=(("JSON Files", "*.json"), ("all files", "*.*")))
@@ -66,6 +73,7 @@ class BottomRightFrame:
 
         self.app.file_location = json_location
 
+        # Configure Label to represent our filename.
         json_location = os.path.basename(json_location)
 
         self.label_location.configure(text=json_location)
