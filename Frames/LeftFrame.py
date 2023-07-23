@@ -290,7 +290,7 @@ class LeftFrame:
         """
         Renders the created objects. (!!!Must be created beforehand!!!)
         """
-        print(f"APP: {self.app.hierarchy}")
+        print(f"Elements being rendered: {self.app.hierarchy}")
 
         # CONSTANTS
         index_row = 0
@@ -348,7 +348,7 @@ class LeftFrame:
                 continue
 
             else:
-                print(f"Group Name: {group_name}")
+                print(f"Debug Log: Found a Group, setting group name to: {group_name}")
 
             # Create the Frame
             new_frame_group = customtkinter.CTkFrame(master=self.hierarchy_frame)
@@ -500,6 +500,7 @@ class LeftFrame:
 
         elif type(group_member) == Sphere:
             # We got an Object and not a frame
+            print("I was called")
 
             # Calculate width and padx based on recursion depth.
             width_row = default_width_row - child_modifier_size * current_recursion
