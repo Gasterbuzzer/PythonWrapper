@@ -5,6 +5,8 @@ from Objects.Color import Color
 from Objects.HalfSpace import HalfSpace
 from Objects.Group import Group
 
+from CustomElements.HierarchyElement import HE
+
 
 class LeftFrame:
     """
@@ -313,24 +315,11 @@ class LeftFrame:
             if group_name == "sphere":
                 # We got an Object and not a frame
 
-                # Create the Frame
-                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
-                new_frame_member.configure(border_width=2, height=38, width=width_row)
-                new_frame_member.grid(row=index_row, column=0, padx=(5, 0), pady=5)
-                new_frame_member.grid_propagate(False)
-
-                # Frame Name:
-                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
-                                                          width=width_row - 30,
-                                                          text=f"{name.title()}{group[group_name].index}")
-                new_group_member.grid(row=index_row, column=0, padx=(5, 0), pady=5)
-                new_group_member.grid_propagate(False)
-
-                self.hierarchy_render.append(new_frame_member)
-                self.hierarchy_info.append(group)
+                HE(self.hierarchy_frame, group[group_name], group_name, row=index_row)
 
                 index_row += 1
                 continue
+
             elif group_name == "halfspace":
                 # We got an Object and not a frame
 
@@ -566,3 +555,9 @@ class LeftFrame:
 
         self.app.hierarchy = []
         self.hierarchy_render = []
+
+    def open_object_settings(self, self_object, event=None) -> None:
+        """
+        Opens the settings page for the given object
+        """
+        print(self, event, self_object)
