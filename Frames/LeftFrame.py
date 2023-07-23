@@ -323,21 +323,7 @@ class LeftFrame:
             elif group_name == "halfspace":
                 # We got an Object and not a frame
 
-                # Create the Frame
-                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
-                new_frame_member.configure(border_width=2, height=38, width=width_row)
-                new_frame_member.grid(row=index_row, column=0, padx=(5, 0), pady=5)
-                new_frame_member.grid_propagate(False)
-
-                # Frame Name:
-                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
-                                                          width=width_row - 30,
-                                                          text=f"{name.title()}{group[group_name].index}")
-                new_group_member.grid(row=index_row, column=0, padx=(5, 0), pady=5)
-                new_group_member.grid_propagate(False)
-
-                self.hierarchy_render.append(new_frame_member)
-                self.hierarchy_info.append(group)
+                HE(self.hierarchy_frame, group[group_name], group_name, row=index_row, leftframe_class_reference=self)
 
                 index_row += 1
                 continue
@@ -409,26 +395,9 @@ class LeftFrame:
                 # We got an Object and not a frame
                 print(f"Debug Log: Sphere Row: {row}")
 
-                # Calculate width and padx based on recursion depth.
-                width_row = default_width_row - child_modifier_size * current_recursion
-                padx_value = 5 + child_modifier_size * current_recursion
+                HE(self.hierarchy_frame, group_member[object_name], object_name, row=row,
+                   leftframe_class_reference=self, current_recursion=current_recursion)
 
-                # Create the Frame
-                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
-                new_frame_member.configure(border_width=2, height=38, width=width_row)
-                new_frame_member.grid(row=row, column=0, padx=(padx_value, 0), pady=5)
-                new_frame_member.grid_propagate(False)
-
-                # Frame Name:
-                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
-                                                          width=width_row - 30,
-                                                          text=f"{object_name.title()}{group_member[object_name].index}"
-                                                          )
-                new_group_member.grid(row=row, column=0, padx=(5, 0), pady=5)
-                new_group_member.grid_propagate(False)
-
-                self.hierarchy_render.append(new_frame_member)
-                self.hierarchy_info.append(group_member)
                 return row
 
             elif object_name.lower() == "halfspace":
