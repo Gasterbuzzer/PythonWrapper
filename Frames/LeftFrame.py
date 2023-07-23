@@ -297,9 +297,12 @@ class LeftFrame:
         # Now for each group we render their respective objects (for now only the name)
 
         if type(group_member) == list:
+            new_row_value = row + 2
+
             for _e in group_member:
-                self.recurse_over_elements_render(_e, row+2, current_recursion+1)
-            return
+                self.recurse_over_elements_render(_e, new_row_value, current_recursion + 1)
+
+                new_row_value += 2
 
         elif type(group_member) == dict:
             # We assume we have a readable element.
@@ -311,12 +314,13 @@ class LeftFrame:
                 # We got an Object and not a frame
 
                 # Calculate width and padx based on recursion depth.
-                width_row = default_width_row - child_modifier_size*current_recursion
+                width_row = default_width_row - child_modifier_size * current_recursion
+                padx_value = 5 + child_modifier_size * current_recursion
 
                 # Create the Frame
                 new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
                 new_frame_member.configure(border_width=2, height=38, width=width_row)
-                new_frame_member.grid(row=row, column=0, padx=(5, 0), pady=5)
+                new_frame_member.grid(row=row, column=0, padx=(padx_value, 0), pady=5)
                 new_frame_member.grid_propagate(False)
 
                 # Frame Name:
@@ -328,6 +332,55 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+
+            elif object_name.lower() == "halfspace":
+                # We got an Object and not a frame
+
+                # Calculate width and padx based on recursion depth.
+                width_row = default_width_row - child_modifier_size * current_recursion
+                padx_value = 5 + child_modifier_size * current_recursion
+
+                # Create the Frame
+                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
+                new_frame_member.configure(border_width=2, height=38, width=width_row)
+                new_frame_member.grid(row=row, column=0, padx=(padx_value, 0), pady=5)
+                new_frame_member.grid_propagate(False)
+
+                # Frame Name:
+                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
+                                                          width=width_row - 30,
+                                                          text=f"{object_name.title()}{group_member[object_name].index}"
+                                                          )
+                new_group_member.grid(row=row, column=0, padx=(5, 0), pady=5)
+                new_group_member.grid_propagate(False)
+
+                self.hierarchy_render.append(new_frame_member)
+
+            elif object_name.lower() == "objectnotimplemented":
+                # We got an Object and not a frame
+
+                # Calculate width and padx based on recursion depth.
+                width_row = default_width_row - child_modifier_size * current_recursion
+                padx_value = 5 + child_modifier_size * current_recursion
+
+                # Create the Frame
+                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
+                new_frame_member.configure(border_width=2, height=38, width=width_row)
+                new_frame_member.grid(row=row, column=0, padx=(padx_value, 0), pady=5)
+                new_frame_member.grid_propagate(False)
+
+                # Frame Name:
+                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
+                                                          width=width_row - 30,
+                                                          text=f"UnknownType:{group_member[object_name]}"
+                                                          )
+                new_group_member.grid(row=row, column=0, padx=(5, 0), pady=5)
+                new_group_member.grid_propagate(False)
+
+                self.hierarchy_render.append(new_frame_member)
+
+            else:
+                print(f"Critical Error Log: Unknown type of {object_name}")
 
         elif type(group_member) == Sphere:
             # We have a sphere
