@@ -79,7 +79,7 @@ class LeftFrame:
     def recurse_over_app(self, object_app, object_name="NoNameGiven", group_index="RecursiveFunctionNoGroupGiven",
                          _index_possibly_given="", debug=False) -> dict:
         """
-        Recurses over objects and gets, the according objects.
+        Recurse over objects and finds the according objects.
         """
 
         # It could happen that the index it outside for some odd reason, we so will try to deal with it like this.
@@ -295,7 +295,6 @@ class LeftFrame:
         # CONSTANTS
         index_row = 0
         width_row = 360
-        child_modifier_size = 40
 
         # Now we try drawing every element:
         for index, group in enumerate(self.app.hierarchy):
