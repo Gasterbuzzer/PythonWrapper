@@ -365,13 +365,13 @@ class LeftFrame:
 
             # Now for each group we render their respective objects (for now only the name)
             for group_member in group.values():
-                self.recurse_over_elements_render(group_member, index_row, 1)
+                index_row = self.recurse_over_elements_render(group_member, index_row, 1)
 
                 index_row += 2
 
         index_row += 1
 
-    def recurse_over_elements_render(self, group_member, row, current_recursion) -> None:
+    def recurse_over_elements_render(self, group_member, row, current_recursion) -> int:
         """
 
         :return:
@@ -387,9 +387,12 @@ class LeftFrame:
             new_row_value = row + 2
 
             for _e in group_member:
-                self.recurse_over_elements_render(_e, new_row_value, current_recursion + 1)
+
+                new_row_value = self.recurse_over_elements_render(_e, new_row_value, current_recursion + 1)
 
                 new_row_value += 2
+
+            return new_row_value
 
         elif type(group_member) == dict:
             # We assume we have a readable element.
@@ -399,7 +402,7 @@ class LeftFrame:
 
             if object_name.lower() == "sphere":
                 # We got an Object and not a frame
-                print(f"Sphere: {row}")
+                print(f"Debug Log: Sphere Row: {row}")
 
                 # Calculate width and padx based on recursion depth.
                 width_row = default_width_row - child_modifier_size * current_recursion
@@ -420,10 +423,11 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                return row
 
             elif object_name.lower() == "halfspace":
                 # We got an Object and not a frame
-                print(f"HalfSpace: {row}")
+                print(f"Debug Log: HalfSpace Row: {row}")
 
                 # Calculate width and padx based on recursion depth.
                 width_row = default_width_row - child_modifier_size * current_recursion
@@ -444,6 +448,7 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                return row
 
             elif object_name.lower() == "objectnotimplemented":
                 # The Object given is valid but is not yet implemented.
@@ -467,6 +472,7 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                return row
 
             elif object_name.lower() == "group":
                 # We got a group, so we create a subgroup:
@@ -493,12 +499,15 @@ class LeftFrame:
                 current_row_value = row + 2
 
                 for gm in group_member.values():
-                    self.recurse_over_elements_render(gm, current_row_value, current_recursion+1)
+                    current_row_value = self.recurse_over_elements_render(gm, current_row_value, current_recursion+1)
 
                     current_row_value += 2
 
+                return current_row_value
+
             else:
                 print(f"Critical Error Log: Unknown type of {object_name}")
+                return row
 
         elif type(group_member) == Sphere:
             # We got an Object and not a frame
@@ -522,6 +531,7 @@ class LeftFrame:
             new_group_member.grid_propagate(False)
 
             self.hierarchy_render.append(new_frame_member)
+            return row
 
     def destroy_frame_objects(self) -> None:
         """
