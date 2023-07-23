@@ -2,6 +2,7 @@
 import customtkinter
 from Objects.Sphere import Sphere
 from Objects.Color import Color
+from Objects.HalfSpace import HalfSpace
 
 
 class LeftFrame:
@@ -214,7 +215,73 @@ class LeftFrame:
 
         elif object_name.lower() == "halfspace":
 
-            return {"ObjectNotImplemented": object_name}
+            object_app = object_app[object_name]
+            try:
+                position = object_app["position"]
+            except KeyError:
+                print(f"Weak Error Log: Half-Space Position for {group_index} is not given.")
+                position = None
+
+            try:
+                normal = object_app["normal"]
+            except KeyError:
+                print(f"Weak Error Log: Half-Space Normal Value for {group_index} is not given.")
+                normal = None
+
+            try:
+                color_json = object_app["color"]
+                # Now that we have the color, we must convert it to a functioning object. :(
+
+                try:
+                    color_ambient = color_json["ambient"]
+                except KeyError:
+                    print(f"Weak Error Log: Color Ambient for {object_app} {group_index} is not given.")
+                    color_ambient = None
+                try:
+                    color_diffuse = color_json["diffuse"]
+                except KeyError:
+                    print(f"Weak Error Log: Color Diffuse for {object_app} {group_index} is not given.")
+                    color_diffuse = None
+                try:
+                    color_specular = color_json["specular"]
+                except KeyError:
+                    print(f"Weak Error Log: Color Specular for {object_app} {group_index} is not given.")
+                    color_specular = None
+                try:
+                    color_reflected = color_json["reflected"]
+                except KeyError:
+                    print(f"Weak Error Log: Color Reflected for {object_app} {group_index} is not given.")
+                    color_reflected = None
+                try:
+                    color_refracted = color_json["refracted"]
+                except KeyError:
+                    print(f"Weak Error Log: Color Refracted for {object_app} {group_index} is not given.")
+                    color_refracted = None
+                try:
+                    color_shininess = color_json["shininess"]
+                except KeyError:
+                    print(f"Weak Error Log: Color Shininess for {object_app} {group_index} is not given.")
+                    color_shininess = None
+
+                # Create Object
+                color = Color(color_ambient, color_diffuse, color_specular, color_reflected,
+                              color_refracted, color_shininess)
+                # Now we have the object, we continue
+
+            except KeyError:
+                print(f"Weak Error Log: Half-Space Color for {group_index} is not given.")
+                color = None
+
+            try:
+                if index_possibly_given == "":
+                    i = object_app["index"]
+                else:
+                    i = index_possibly_given
+            except KeyError:
+                print(f"Weak Error Log: Half-Space Index for {group_index} is not given.")
+                i = None
+
+            return {"halfspace": HalfSpace(position, normal, color, i)}
 
         else:
             return {"ObjectNotFound": object_name}
@@ -240,6 +307,26 @@ class LeftFrame:
                 group_name: str = name
 
             if group_name == "sphere":
+                # We got an Object and not a frame
+
+                # Create the Frame
+                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
+                new_frame_member.configure(border_width=2, height=38, width=width_row)
+                new_frame_member.grid(row=index_row, column=0, padx=(5, 0), pady=5)
+                new_frame_member.grid_propagate(False)
+
+                # Frame Name:
+                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
+                                                          width=width_row - 30,
+                                                          text=f"{name.title()}{group[group_name].index}")
+                new_group_member.grid(row=index_row, column=0, padx=(5, 0), pady=5)
+                new_group_member.grid_propagate(False)
+
+                self.hierarchy_render.append(new_frame_member)
+
+                index_row += 1
+                continue
+            elif group_name == "halfspace":
                 # We got an Object and not a frame
 
                 # Create the Frame
@@ -357,7 +444,7 @@ class LeftFrame:
                 self.hierarchy_render.append(new_frame_member)
 
             elif object_name.lower() == "objectnotimplemented":
-                # We got an Object and not a frame
+                # The Object given is valid but is not yet implemented.
 
                 # Calculate width and padx based on recursion depth.
                 width_row = default_width_row - child_modifier_size * current_recursion
