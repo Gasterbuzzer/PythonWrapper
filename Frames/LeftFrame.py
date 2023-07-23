@@ -466,12 +466,60 @@ class LeftFrame:
 
                 self.hierarchy_render.append(new_frame_member)
 
+            elif object_name.lower() == "group":
+                # We got a group, so we create a subgroup:
+
+                # Calculate width and padx based on recursion depth.
+                width_row = default_width_row - child_modifier_size * current_recursion
+                padx_value = 5 + child_modifier_size * current_recursion
+
+                # Create the Frame
+                new_frame_group = customtkinter.CTkFrame(master=self.hierarchy_frame)
+                new_frame_group.configure(border_width=2, height=38, width=width_row)
+                new_frame_group.grid(row=row, column=0, padx=(padx_value, 0), pady=5)
+                new_frame_group.grid_propagate(False)
+
+                # Frame Name:
+                new_group_name = customtkinter.CTkLabel(new_frame_group, height=30, width=width_row - 30,
+                                                        text="Group")
+                new_group_name.grid(row=0, column=0, padx=5, pady=5)
+                new_group_name.grid_propagate(False)
+
+                self.hierarchy_render.append(new_frame_group)
+
+                # Now for each group we render their respective objects (for now only the name)
+                current_row_value = row
+
+                for gm in group_member.values():
+                    self.recurse_over_elements_render(gm, current_row_value, current_recursion+1)
+
+                    current_row_value += 2
+
             else:
                 print(f"Critical Error Log: Unknown type of {object_name}")
 
         elif type(group_member) == Sphere:
-            # We have a sphere
-            ...
+            # We got an Object and not a frame
+
+            # Calculate width and padx based on recursion depth.
+            width_row = default_width_row - child_modifier_size * current_recursion
+            padx_value = 5 + child_modifier_size * current_recursion
+
+            # Create the Frame
+            new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
+            new_frame_member.configure(border_width=2, height=38, width=width_row)
+            new_frame_member.grid(row=row, column=0, padx=(padx_value, 0), pady=5)
+            new_frame_member.grid_propagate(False)
+
+            # Frame Name:
+            new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
+                                                      width=width_row - 30,
+                                                      text=f"Sphere{group_member['sphere'].index}"
+                                                      )
+            new_group_member.grid(row=row, column=0, padx=(5, 0), pady=5)
+            new_group_member.grid_propagate(False)
+
+            self.hierarchy_render.append(new_frame_member)
 
     def destroy_frame_objects(self) -> None:
         """
