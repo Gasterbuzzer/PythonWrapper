@@ -3,6 +3,7 @@ import customtkinter
 from Objects.Sphere import Sphere
 from Objects.Color import Color
 from Objects.HalfSpace import HalfSpace
+from Objects.Group import Group
 
 
 class LeftFrame:
@@ -51,6 +52,7 @@ class LeftFrame:
 
         # Hierarchy
         self.hierarchy_render = []
+        self.hierarchy_info = []
 
     def create_hierarchy(self) -> None:
         """
@@ -179,7 +181,10 @@ class LeftFrame:
                 if _e_name != "index":
                     union_elements.append(self.recurse_over_app(_e, _e_name))
 
-            return {"Group": union_elements}
+            # Creating a new group with the data of it:
+            new_group = Group(union_elements)
+
+            return {"Group": new_group}
 
         elif object_name.lower() == "translation":
 
@@ -322,6 +327,7 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                self.hierarchy_info.append(group)
 
                 index_row += 1
                 continue
@@ -342,6 +348,7 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                self.hierarchy_info.append(group)
 
                 index_row += 1
                 continue
@@ -361,6 +368,7 @@ class LeftFrame:
             new_group_name.grid_propagate(False)
 
             self.hierarchy_render.append(new_frame_group)
+            self.hierarchy_info.append(group)
 
             # Now for each group we render their respective objects (for now only the name)
             for group_member in group.values():
@@ -386,6 +394,17 @@ class LeftFrame:
             new_row_value = row + 2
 
             for _e in group_member:
+
+                new_row_value = self.recurse_over_elements_render(_e, new_row_value, current_recursion + 1)
+
+                new_row_value += 2
+
+            return new_row_value
+
+        elif type(group_member) == Group:
+            new_row_value = row + 2
+
+            for _e in group_member.objects:
 
                 new_row_value = self.recurse_over_elements_render(_e, new_row_value, current_recursion + 1)
 
@@ -422,6 +441,7 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                self.hierarchy_info.append(group_member)
                 return row
 
             elif object_name.lower() == "halfspace":
@@ -447,6 +467,7 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                self.hierarchy_info.append(group_member)
                 return row
 
             elif object_name.lower() == "objectnotimplemented":
@@ -471,6 +492,7 @@ class LeftFrame:
                 new_group_member.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_member)
+                self.hierarchy_info.append(group_member)
                 return row
 
             elif object_name.lower() == "group":
@@ -493,6 +515,7 @@ class LeftFrame:
                 new_group_name.grid_propagate(False)
 
                 self.hierarchy_render.append(new_frame_group)
+                self.hierarchy_info.append(group_member)
 
                 # Now for each group we render their respective objects (for now only the name)
                 current_row_value = row + 2
@@ -530,6 +553,7 @@ class LeftFrame:
             new_group_member.grid_propagate(False)
 
             self.hierarchy_render.append(new_frame_member)
+            self.hierarchy_info.append(group_member)
             return row
 
     def destroy_frame_objects(self) -> None:
