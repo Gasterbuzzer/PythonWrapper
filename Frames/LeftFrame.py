@@ -376,7 +376,7 @@ class LeftFrame:
 
                 index_row += 2
 
-        index_row += 1
+        print(self.hierarchy_info)
 
     def recurse_over_elements_render(self, group_member, row, current_recursion) -> int:
         """
@@ -394,7 +394,6 @@ class LeftFrame:
             new_row_value = row + 2
 
             for _e in group_member:
-
                 new_row_value = self.recurse_over_elements_render(_e, new_row_value, current_recursion + 1)
 
                 new_row_value += 2
@@ -405,7 +404,6 @@ class LeftFrame:
             new_row_value = row + 2
 
             for _e in group_member.objects:
-
                 new_row_value = self.recurse_over_elements_render(_e, new_row_value, current_recursion + 1)
 
                 new_row_value += 2
@@ -521,7 +519,7 @@ class LeftFrame:
                 current_row_value = row + 2
 
                 for gm in group_member.values():
-                    current_row_value = self.recurse_over_elements_render(gm, current_row_value, current_recursion+1)
+                    current_row_value = self.recurse_over_elements_render(gm, current_row_value, current_recursion + 1)
 
                     current_row_value += 2
 
