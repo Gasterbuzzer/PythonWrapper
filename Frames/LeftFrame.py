@@ -64,11 +64,13 @@ class LeftFrame:
             # Getting return value name:
             object_name = next(iter(return_value))
 
-            if object_name == "sphere":
+            if object_name.lower() == "sphere":
+                self.app.hierarchy.append(return_value)
+            elif object_name.lower() == "group":
                 self.app.hierarchy.append(return_value)
             else:
                 # We don't do anything for now.
-                print(f"H: {self.app.hierarchy}")
+                print(f"H: {self.app.hierarchy} with new element: {return_value}")
 
         # Now that we have loaded each object into memory, we can try rendering.
         print("\n")
@@ -88,7 +90,7 @@ class LeftFrame:
                 if debug:
                     print("Object Name: " + name + "\n")
                 if name.lower() == "index":
-                    index_possibly_given = name
+                    index_possibly_given = object_app[name]
                 else:
                     object_name = name
 
@@ -187,7 +189,7 @@ class LeftFrame:
             for name in new_recursive_object:
 
                 if name.lower() == "index":
-                    index_possibly_given = name
+                    index_possibly_given = new_recursive_object["index"]
                 else:
                     new_recursive_object_name = name
 
@@ -203,7 +205,7 @@ class LeftFrame:
             for name in new_recursive_object:
 
                 if name.lower() == "index":
-                    index_possibly_given = name
+                    index_possibly_given = new_recursive_object["index"]
                 else:
                     new_recursive_object_name = name
 
@@ -221,6 +223,7 @@ class LeftFrame:
         """
         Renders the created objects. (!!!Must be created beforehand!!!)
         """
+        print(f"APP: {self.app.hierarchy}")
 
         # CONSTANTS
         index_row = 0
@@ -275,34 +278,60 @@ class LeftFrame:
 
             # Now for each group we render their respective objects (for now only the name)
             for group_member in group.values():
-
-                # We set the parent of the member
-                parent = group_name
-
-                # We adapt to a type of object
-                if type(group_member) is Sphere:
-                    name = "Sphere"
-                else:
-                    print(f"List: {group_member}")
-                    name = "Unknown Type"
-
-                # Create the Frame
-                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
-                new_frame_member.configure(border_width=2, height=38, width=width_row - child_modifier_size)
-                new_frame_member.grid(row=index_row + 1, column=0, padx=(45, 0), pady=5)
-                new_frame_member.grid_propagate(False)
-
-                # Frame Name:
-                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
-                                                          width=width_row - child_modifier_size - 30, text=name)
-                new_group_member.grid(row=0, column=0, padx=5, pady=5)
-                new_group_member.grid_propagate(False)
-
-                self.hierarchy_render.append(new_frame_member)
+                self.recurse_over_elements_render(group_member, index_row, 1)
 
                 index_row += 2
 
         index_row += 1
+
+    def recurse_over_elements_render(self, group_member, row, current_recursion) -> None:
+        """
+
+        :return:
+        """
+
+        # CONSTANTS
+        default_width_row = 360
+        child_modifier_size = 40
+
+        # Now for each group we render their respective objects (for now only the name)
+
+        if type(group_member) == list:
+            for _e in group_member:
+                self.recurse_over_elements_render(_e, row+2, current_recursion+1)
+            return
+
+        elif type(group_member) == dict:
+            # We assume we have a readable element.
+
+            # Getting Name:
+            object_name = next(iter(group_member))
+
+            if object_name.lower() == "sphere":
+                # We got an Object and not a frame
+
+                # Calculate width and padx based on recursion depth.
+                width_row = default_width_row - child_modifier_size*current_recursion
+
+                # Create the Frame
+                new_frame_member = customtkinter.CTkFrame(master=self.hierarchy_frame)
+                new_frame_member.configure(border_width=2, height=38, width=width_row)
+                new_frame_member.grid(row=row, column=0, padx=(5, 0), pady=5)
+                new_frame_member.grid_propagate(False)
+
+                # Frame Name:
+                new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
+                                                          width=width_row - 30,
+                                                          text=f"{object_name.title()}{group_member[object_name].index}"
+                                                          )
+                new_group_member.grid(row=row, column=0, padx=(5, 0), pady=5)
+                new_group_member.grid_propagate(False)
+
+                self.hierarchy_render.append(new_frame_member)
+
+        elif type(group_member) == Sphere:
+            # We have a sphere
+            ...
 
     def destroy_frame_objects(self) -> None:
         """
