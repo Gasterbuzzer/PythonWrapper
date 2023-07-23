@@ -5,7 +5,7 @@ from Objects.Color import Color
 from Objects.HalfSpace import HalfSpace
 from Objects.Group import Group
 
-from CustomElements.HierarchyElement import HE
+from Frames.CustomElements.HierarchyElement import HE
 
 
 class LeftFrame:
