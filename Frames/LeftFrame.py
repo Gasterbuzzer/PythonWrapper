@@ -290,7 +290,7 @@ class LeftFrame:
         """
         Renders the created objects. (!!!Must be created beforehand!!!)
         """
-        print(f"Elements being rendered: {self.app.hierarchy}")
+        print(f"Debug Log: Elements being rendered: {self.app.hierarchy}")
 
         # CONSTANTS
         index_row = 0
@@ -399,6 +399,7 @@ class LeftFrame:
 
             if object_name.lower() == "sphere":
                 # We got an Object and not a frame
+                print(f"Sphere: {row}")
 
                 # Calculate width and padx based on recursion depth.
                 width_row = default_width_row - child_modifier_size * current_recursion
@@ -422,6 +423,7 @@ class LeftFrame:
 
             elif object_name.lower() == "halfspace":
                 # We got an Object and not a frame
+                print(f"HalfSpace: {row}")
 
                 # Calculate width and padx based on recursion depth.
                 width_row = default_width_row - child_modifier_size * current_recursion
@@ -488,7 +490,7 @@ class LeftFrame:
                 self.hierarchy_render.append(new_frame_group)
 
                 # Now for each group we render their respective objects (for now only the name)
-                current_row_value = row
+                current_row_value = row + 2
 
                 for gm in group_member.values():
                     self.recurse_over_elements_render(gm, current_row_value, current_recursion+1)
@@ -500,7 +502,6 @@ class LeftFrame:
 
         elif type(group_member) == Sphere:
             # We got an Object and not a frame
-            print("I was called")
 
             # Calculate width and padx based on recursion depth.
             width_row = default_width_row - child_modifier_size * current_recursion
