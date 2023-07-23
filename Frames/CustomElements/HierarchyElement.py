@@ -9,7 +9,7 @@ class HE:
     """
 
     def __init__(self, outside_reference, object_reference, element_text="DefaultName", current_recursion=0,
-                 row=0) -> None:
+                 row=0, leftframe_class_reference=None) -> None:
         """
         Class representing a Frame, Text and some Symbol of an Element of the Hierarchy.
 
@@ -25,6 +25,7 @@ class HE:
         self.element_text = element_text
         self.current_recursion = current_recursion
         self.row = row
+        self.leftframe_class_reference = leftframe_class_reference
 
         # CONSTANTS
         default_width_row = 360
@@ -51,8 +52,8 @@ class HE:
 
         new_group_member.bind("<Button-1>", self.open_settings)
 
-        self.left_frame.hierarchy_render.append(new_frame_member)
-        self.left_frame.hierarchy_info.append(object_reference)
+        self.leftframe_class_reference.hierarchy_render.append(new_frame_member)
+        self.leftframe_class_reference.hierarchy_info.append(object_reference)
 
     def open_settings(self, event=None) -> None:
         """

@@ -315,7 +315,7 @@ class LeftFrame:
             if group_name == "sphere":
                 # We got an Object and not a frame
 
-                HE(self.hierarchy_frame, group[group_name], group_name, row=index_row)
+                HE(self.hierarchy_frame, group[group_name], group_name, row=index_row, leftframe_class_reference=self)
 
                 index_row += 1
                 continue
