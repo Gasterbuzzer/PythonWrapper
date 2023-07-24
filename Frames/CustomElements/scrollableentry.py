@@ -35,7 +35,8 @@ class ScrollableEntry:
             self.column += 1
 
         # First Button (Minus)
-        self.button_minus = customtkinter.CTkButton(master=self.master, text="-", width=20, height=self.height)
+        self.button_minus = customtkinter.CTkButton(master=self.master, text="-", width=20, height=self.height,
+                                                    command=self.minus_value)
         self.button_minus.grid(row=self.row, column=self.column, padx=(5, 0), pady=self.pady)
 
         # Entry Box
@@ -47,3 +48,27 @@ class ScrollableEntry:
         # Second Button (Plus)
         self.button_plus = customtkinter.CTkButton(master=self.master, text="+", width=20, height=self.height)
         self.button_plus.grid(row=self.row, column=self.column + 2, padx=self.padx, pady=self.pady)
+
+    def get_value(self) -> int:
+        """
+        Gets the value stored in the entry.
+        :return: (Int) Returns the given integer value.
+        """
+        return self.textbox.get()
+
+    def minus_value(self) -> None:
+        """
+
+        :return:
+        """
+        text_box_value = self.textbox.get()
+        text_box_value_ = text_box_value
+
+        if text_box_value == "":
+            text_box_value_ = self.placeholder_text
+
+        current_value = float(text_box_value_)
+        current_value -= 1
+
+        self.textbox.delete(0, len(text_box_value))
+        self.textbox.insert(0, current_value)
