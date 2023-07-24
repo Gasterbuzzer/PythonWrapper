@@ -301,7 +301,6 @@ class LeftFrame:
 
         # CONSTANTS
         index_row = 0
-        width_row = 360
 
         # Now we try drawing every element:
         for index, group in enumerate(self.app.hierarchy):
@@ -343,10 +342,6 @@ class LeftFrame:
 
         :return:
         """
-
-        # CONSTANTS
-        default_width_row = 360
-        child_modifier_size = 40
 
         # Now for each group we render their respective objects (for now only the name)
 
@@ -410,7 +405,6 @@ class LeftFrame:
 
                 # Now for each group we render their respective objects (for now only the name)
                 current_row_value = row + 2
-                current_row_value = row + 2
 
                 for gm in group_member.values():
                     current_row_value = self.recurse_over_elements_render(gm, current_row_value, current_recursion + 1)
@@ -426,7 +420,7 @@ class LeftFrame:
         elif type(group_member) == Sphere:
             # We got an Object and not a frame
 
-            # Note this, shouldn't really come up, but if it happens you have to deal with it.
+            # Note this, shouldn't really come up, but if it happens, you have to deal with it.
 
             HE(self.hierarchy_frame, group_member["Sphere"], "Sphere", row=row,
                leftframe_class_reference=self, current_recursion=current_recursion)
