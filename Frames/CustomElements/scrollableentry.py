@@ -46,7 +46,8 @@ class ScrollableEntry:
         self.textbox.grid(row=self.row, column=self.column + 1, padx=(5, 0), pady=self.pady)
 
         # Second Button (Plus)
-        self.button_plus = customtkinter.CTkButton(master=self.master, text="+", width=20, height=self.height)
+        self.button_plus = customtkinter.CTkButton(master=self.master, text="+", width=20, height=self.height,
+                                                   command=self.plus_value)
         self.button_plus.grid(row=self.row, column=self.column + 2, padx=self.padx, pady=self.pady)
 
     def get_value(self) -> int:
@@ -69,6 +70,23 @@ class ScrollableEntry:
 
         current_value = float(text_box_value_)
         current_value -= 1
+
+        self.textbox.delete(0, len(text_box_value))
+        self.textbox.insert(0, current_value)
+
+    def plus_value(self) -> None:
+        """
+
+        :return:
+        """
+        text_box_value = self.textbox.get()
+        text_box_value_ = text_box_value
+
+        if text_box_value == "":
+            text_box_value_ = self.placeholder_text
+
+        current_value = float(text_box_value_)
+        current_value += 1
 
         self.textbox.delete(0, len(text_box_value))
         self.textbox.insert(0, current_value)
