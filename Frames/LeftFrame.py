@@ -338,8 +338,6 @@ class LeftFrame:
 
                 index_row += 2
 
-        print(self.hierarchy_info)
-
     def recurse_over_elements_render(self, group_member, row, current_recursion) -> int:
         """
 
