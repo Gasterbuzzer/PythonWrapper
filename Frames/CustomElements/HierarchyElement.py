@@ -1,6 +1,7 @@
 """Class File containing an Element of the Hierarchy"""
 
 import customtkinter
+from Frames.SettingsWindow import SettingsWindow
 
 
 class HE:
@@ -17,6 +18,8 @@ class HE:
         :param object_reference: Reference to Object to represent when clicking on it.
         :param element_text: Text to be displayed on Text.
         :param current_recursion: Current Recursion Step
+        :param row: Row to display
+        :param leftframe_class_reference: Left Frame Reference
         """
 
         # Self Values
@@ -66,4 +69,5 @@ class HE:
         Opens the settings for the given object.
         :param event:
         """
-        print(self.object_reference)
+        settings_window = SettingsWindow(self.object_reference, self.leftframe_class_reference.app.app)
+        settings_window.open_window()
