@@ -27,6 +27,12 @@ class HE:
         self.row = row
         self.leftframe_class_reference = leftframe_class_reference
 
+        try:
+            index_value = object_reference.index
+        except AttributeError:
+            # Given Object does not have an Index and thus must be a group (for now):
+            index_value = ""
+
         # CONSTANTS
         default_width_row = 360
         child_modifier_size = 40
@@ -46,7 +52,7 @@ class HE:
         # Frame Name:
         new_group_member = customtkinter.CTkLabel(new_frame_member, height=30,
                                                   width=width_row - 30,
-                                                  text=f"{element_text.title()}{object_reference.index}")
+                                                  text=f"{element_text.title()}{index_value}")
         new_group_member.grid(row=self.row, column=0, padx=(5, 0), pady=5)
         new_group_member.grid_propagate(False)
 

@@ -308,7 +308,6 @@ class LeftFrame:
 
             # Get the Name of group
             group_name = "Could not get Name."
-            name = "NameCouldNotBeFound"
             for name in group.keys():
                 group_name: str = name
 
@@ -331,19 +330,7 @@ class LeftFrame:
             else:
                 print(f"Debug Log: Found a Group, setting group name to: {group_name}")
 
-            # Create the Frame
-            new_frame_group = customtkinter.CTkFrame(master=self.hierarchy_frame)
-            new_frame_group.configure(border_width=2, height=38, width=width_row)
-            new_frame_group.grid(row=index_row, column=0, padx=(5, 0), pady=5)
-            new_frame_group.grid_propagate(False)
-
-            # Frame Name:
-            new_group_name = customtkinter.CTkLabel(new_frame_group, height=30, width=width_row - 30, text=group_name)
-            new_group_name.grid(row=0, column=0, padx=5, pady=5)
-            new_group_name.grid_propagate(False)
-
-            self.hierarchy_render.append(new_frame_group)
-            self.hierarchy_info.append(group)
+            HE(self.hierarchy_frame, group[group_name], group_name, row=index_row, leftframe_class_reference=self)
 
             # Now for each group we render their respective objects (for now only the name)
             for group_member in group.values():
