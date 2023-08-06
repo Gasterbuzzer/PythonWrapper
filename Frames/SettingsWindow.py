@@ -4,12 +4,104 @@ import customtkinter
 from Frames.CustomElements.scrollableentry import ScrollableEntry
 
 
+def recurse_until_found_or_not(object_to_find, current_object, object_to_find_name: str, debug:bool = False) -> object:
+    """
+    Recurse over an object list and checks until finding the object requested.
+    """
+
+    # Since the Object we want to find is that one, we can be happy and do what we wanted.
+    if debug:
+        print("\nComparing both objects:", current_object, object_to_find, "with name: ", object_to_find_name)
+
+    if type(current_object) == dict:
+        # Dictionary Object:
+        try:
+            return recurse_until_found_or_not(object_to_find, current_object["sphere"], "Sphere")
+        except KeyError:
+            pass
+
+        try:
+            return recurse_until_found_or_not(object_to_find, current_object["halfspace"], "Halfspace")
+        except KeyError:
+            pass
+
+        try:
+
+            if current_object["Group"] == object_to_find:
+                return object_to_find
+
+            for obj in current_object["Group"].objects:
+
+                if debug:
+                    print(f"Group JSON: New Object {obj}")
+
+                new_obj = recurse_until_found_or_not(object_to_find, obj, obj.__class__.__name__.title())
+
+                if new_obj == object_to_find:
+                    return object_to_find
+
+            return None
+
+        except KeyError:
+            print("Weak Error Log: Dictionary Object is Unknown")
+            return None
+
+    if current_object is object_to_find:
+        return object_to_find
+
+    elif object_to_find_name == "Group":
+
+        for obj in current_object:
+            if debug:
+                print(f"Group Objects: New Object {obj}")
+
+            new_obj = recurse_until_found_or_not(object_to_find, obj, obj.__class__.__name__.title())
+
+            if new_obj == object_to_find:
+                return object_to_find
+
+        return None
+
+    elif object_to_find is None:
+        return None
+
+    elif object_to_find_name == "Sphere":
+        if object_to_find == current_object:
+            return current_object
+        else:
+            return None
+
+    elif object_to_find_name == "Halfspace":
+
+        if object_to_find == current_object:
+            return current_object
+        else:
+            return None
+
+    elif object_to_find_name == "Group":
+
+        for obj in current_object["Group"]:
+            if debug:
+                print(f"Group JSON: New Object {obj}")
+
+            new_obj = recurse_until_found_or_not(object_to_find, obj, obj.__class__.__name__.title())
+
+            if new_obj == object_to_find:
+                return object_to_find
+
+        return None
+
+    else:
+        print(f"\nWeak Error Log: Unknown Object: Returning None. Object is {current_object} with object to find {object_to_find} and type of current object {type(current_object)}")
+        return None
+
+
 class SettingsWindow:
     """
     Settings Window Class to call it.
     """
 
-    def __init__(self, object_to_display, master_app) -> None:
+    def __init__(self, object_to_display, master_app, main_reference) -> None:
         """
         Class repressenting a settings window.
 
@@ -20,6 +112,7 @@ class SettingsWindow:
         # Values
         self.object_to_display = object_to_display
         self.app = master_app
+        self.main = main_reference
 
         # Window Constants
         self.width = 400
@@ -87,9 +180,32 @@ class SettingsWindow:
                                                       placeholder_text=self.object_coordinates[2], column=1, row=2,
                                                       text_in_front="Z: ")
 
-        self.save_button = customtkinter.CTkButton(master=self.main_frame, text="Save Changes")
+        self.save_button = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
+                                                   command=self.update_object_with_new_data)
         self.save_button.grid(row=3, column=0, padx=5, pady=(10, 0))
 
         # Actually Running:
         self.toplevel.grab_set()
         self.toplevel.mainloop()
+
+    def update_object_with_new_data(self) -> None:
+        """
+        Updates an object with the current data. Requires a window to be open.
+        """
+        debug = False
+
+        for obj in self.main.app.hierarchy:
+
+            if debug:
+                print(f"\nCurrent Object: {obj} with the name {obj.__class__.__name__.title()} (Finding: {self.object_to_display}).")
+
+            object_found = recurse_until_found_or_not(self.object_to_display, obj, obj.__class__.__name__.title(),
+                                                      debug)
+            if object_found is not None:
+                # If the Object is not empty (meaning we didn't find it)
+                print("\nDebug Log: Found the object, writing the object new.")
+                # Do the writing
+                return
+
+        # If no object was found.
+        # Let's hope that doesn't happen.
