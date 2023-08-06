@@ -9,7 +9,8 @@ class ScrollableEntry:
     """
 
     def __init__(self, master, width=100, height=7, placeholder_text="23", justify="center",
-                 row=0, column=0, padx=(5, 0), pady=(10, 0), text_in_front="") -> None:
+                 row=0, column=0, padx=(5, 0), pady=(10, 0), text_in_front="", _type="float",
+                 disable_negative_zero=False) -> None:
         """
         Class File containing a Scrollable Entry Widget
         :param master:
@@ -25,6 +26,8 @@ class ScrollableEntry:
         self.padx = padx
         self.pady = pady
         self.text_in_front = text_in_front
+        self.type = _type
+        self.disable_negative_zero = disable_negative_zero
 
         if self.text_in_front != "":
             # Text in front:
@@ -58,22 +61,34 @@ class ScrollableEntry:
         current_value = self.textbox.get()
 
         if current_value == "":
-            return float(self.placeholder_text)
+            if self.type.lower() == "float":
+                return float(self.placeholder_text)
+            elif self.type.lower() == "int":
+                return int(self.placeholder_text)
 
         return current_value
 
     def minus_value(self) -> None:
         """
-
-        :return:
+        Removes 1.0/1 from the given text.
         """
+
         text_box_value = self.textbox.get()
         text_box_value_ = text_box_value
 
         if text_box_value == "":
             text_box_value_ = self.placeholder_text
 
-        current_value = float(text_box_value_)
+        if self.type.lower() == "float":
+            current_value = float(text_box_value_)
+        elif self.type.lower() == "int":
+            current_value = int(text_box_value_)
+        else:
+            current_value = float(text_box_value_)
+
+        if self.disable_negative_zero and current_value-1 < 0:
+            return
+
         current_value -= 1
 
         self.textbox.delete(0, len(text_box_value))
@@ -81,8 +96,7 @@ class ScrollableEntry:
 
     def plus_value(self) -> None:
         """
-
-        :return:
+        Adds 1.0/1 to the given text.
         """
         text_box_value = self.textbox.get()
         text_box_value_ = text_box_value
@@ -90,7 +104,13 @@ class ScrollableEntry:
         if text_box_value == "":
             text_box_value_ = self.placeholder_text
 
-        current_value = float(text_box_value_)
+        if self.type.lower() == "float":
+            current_value = float(text_box_value_)
+        elif self.type.lower() == "int":
+            current_value = int(text_box_value_)
+        else:
+            current_value = float(text_box_value_)
+
         current_value += 1
 
         self.textbox.delete(0, len(text_box_value))

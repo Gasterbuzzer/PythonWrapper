@@ -131,6 +131,11 @@ class SettingsWindow:
         self.position_textbox_y = None
         self.position_textbox_z = None
 
+        # Index
+        self.index_label = None
+        self.index = None
+        self.index_textbox = None
+
         # Save
         self.save_button = None
 
@@ -182,9 +187,22 @@ class SettingsWindow:
                                                       placeholder_text=self.object_coordinates[2], column=1, row=2,
                                                       text_in_front="Z: ")
 
+            # Index
+            self.index_label = customtkinter.CTkLabel(self.main_frame, text="Index: ", justify="center",
+                                                      width=20, font=("Franklin Gothic Medium", 22))
+
+            self.index_label.grid(row=3, column=0, padx=15, pady=(10, 0))
+
+            self.index = self.object_to_display.index
+
+            self.index_textbox = ScrollableEntry(master=self.main_frame,
+                                                 placeholder_text=self.index, column=1, row=3,
+                                                 text_in_front="Index: ", _type="int", disable_negative_zero=True)
+
+        # Save Button
         self.save_button = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
                                                    command=self.update_object_with_new_data)
-        self.save_button.grid(row=3, column=0, padx=5, pady=(10, 0))
+        self.save_button.grid(row=4, column=0, padx=5, pady=(10, 0), sticky="sw")
 
         # Actually Running:
         self.toplevel.grab_set()
@@ -207,14 +225,26 @@ class SettingsWindow:
             if object_found is not None:
                 # If the Object is not empty (meaning we didn't find it)
                 print("\nDebug Log: Found the object, writing the object new.")
+
                 # Do the writing
                 if self.name == "Sphere":
-
                     self.object_coordinates[0] = self.position_textbox_x.get_value()
                     self.object_coordinates[1] = self.position_textbox_y.get_value()
                     self.object_coordinates[2] = self.position_textbox_z.get_value()
+                    self.index = self.index_textbox.get_value()
 
                     object_found.position = self.object_coordinates
+
+                    object_found.index = self.index
+
+                elif self.name == "Halfspace":
+                    self.object_coordinates[0] = self.position_textbox_x.get_value()
+                    self.object_coordinates[1] = self.position_textbox_y.get_value()
+                    self.object_coordinates[2] = self.position_textbox_z.get_value()
+                    self.index = self.index_textbox.get_value()
+
+                    object_found.position = self.object_coordinates
+                    object_found.index = self.index
 
                 return
 
