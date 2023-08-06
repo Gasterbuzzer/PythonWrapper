@@ -440,9 +440,3 @@ class LeftFrame:
 
         self.app.hierarchy = []
         self.hierarchy_render = []
-
-    def open_object_settings(self, self_object, event=None) -> None:
-        """
-        Opens the settings page for the given object
-        """
-        print(self, event, self_object)
