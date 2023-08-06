@@ -197,7 +197,8 @@ class SettingsWindow:
 
             self.index_textbox = ScrollableEntry(master=self.main_frame,
                                                  placeholder_text=self.index, column=1, row=3,
-                                                 text_in_front="Index: ", _type="int", disable_negative_zero=True)
+                                                 text_in_front="Index: ", _type="int", disable_negative_zero=True,
+                                                 pady=(10, 0))
 
         # Save Button
         self.save_button = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
