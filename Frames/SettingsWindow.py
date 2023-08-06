@@ -4,7 +4,7 @@ import customtkinter
 from Frames.CustomElements.scrollableentry import ScrollableEntry
 
 
-def recurse_until_found_or_not(object_to_find, current_object, object_to_find_name: str, debug:bool = False) -> object:
+def recurse_until_found_or_not(object_to_find, current_object, object_to_find_name: str, debug: bool = False) -> object:
     """
     Recurse over an object list and checks until finding the object requested.
     """
@@ -92,7 +92,9 @@ def recurse_until_found_or_not(object_to_find, current_object, object_to_find_na
         return None
 
     else:
-        print(f"\nWeak Error Log: Unknown Object: Returning None. Object is {current_object} with object to find {object_to_find} and type of current object {type(current_object)}")
+        print(f"\nWeak Error Log: Unknown Object: Returning None. Object is {current_object} with object to find"
+              f" {object_to_find} and type of current object {type(current_object)}")
+
         return None
 
 
@@ -103,7 +105,7 @@ class SettingsWindow:
 
     def __init__(self, object_to_display, master_app, main_reference) -> None:
         """
-        Class repressenting a settings window.
+        Class representing a settings window.
 
         :param object_to_display: Object to display in Window.
         :param master_app: Main Window Reference
@@ -197,7 +199,8 @@ class SettingsWindow:
         for obj in self.main.app.hierarchy:
 
             if debug:
-                print(f"\nCurrent Object: {obj} with the name {obj.__class__.__name__.title()} (Finding: {self.object_to_display}).")
+                print(f"\nCurrent Object: {obj} with the name {obj.__class__.__name__.title()}"
+                      f" (Finding: {self.object_to_display}).")
 
             object_found = recurse_until_found_or_not(self.object_to_display, obj, obj.__class__.__name__.title(),
                                                       debug)
@@ -205,6 +208,14 @@ class SettingsWindow:
                 # If the Object is not empty (meaning we didn't find it)
                 print("\nDebug Log: Found the object, writing the object new.")
                 # Do the writing
+                if self.name == "Sphere":
+
+                    self.object_coordinates[0] = self.position_textbox_x.get_value()
+                    self.object_coordinates[1] = self.position_textbox_y.get_value()
+                    self.object_coordinates[2] = self.position_textbox_z.get_value()
+
+                    object_found.position = self.object_coordinates
+
                 return
 
         # If no object was found.

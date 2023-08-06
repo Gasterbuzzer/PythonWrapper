@@ -50,12 +50,17 @@ class ScrollableEntry:
                                                    command=self.plus_value)
         self.button_plus.grid(row=self.row, column=self.column + 2, padx=self.padx, pady=self.pady)
 
-    def get_value(self) -> int:
+    def get_value(self) -> float:
         """
         Gets the value stored in the entry.
-        :return: (Int) Returns the given integer value.
+        :return: (Float) Returns the given float value.
         """
-        return self.textbox.get()
+        current_value = self.textbox.get()
+
+        if current_value == "":
+            return float(self.placeholder_text)
+
+        return current_value
 
     def minus_value(self) -> None:
         """
