@@ -12,3 +12,5 @@ Frames/__pycache__/TopRightFrame.cpython-311.pyc
 Objects/__pycache__/__init__.cpython-311.pyc
 Objects/__pycache__/Color.cpython-311.pyc
 Objects/__pycache__/Sphere.cpython-311.pyc
+Frames/__pycache__/SettingsWindow.cpython-311.pyc
+*.pyc
