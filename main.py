@@ -103,7 +103,7 @@ class MainWindow:
         except KeyError:
             print("Important Error Log: Objects does not exist in file.")
         try:
-            self.objects = self.json_file["screen"]
+            self.screen = self.json_file["screen"]
             print("Debug Log: Found Screen Settings")
         except KeyError:
             print("Weak Error Log: Screen does not exist in file.")
