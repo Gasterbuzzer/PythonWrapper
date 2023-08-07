@@ -2,6 +2,7 @@
 
 import customtkinter
 from Frames.CustomElements.scrollableentry import ScrollableEntry
+from Frames.ColorSettingsWindow import ColorSettingsWindow
 
 
 def recurse_until_found_or_not(object_to_find, current_object, object_to_find_name: str, debug: bool = False) -> object:
@@ -153,6 +154,13 @@ class SettingsWindow:
         self.normal_textbox_y = None
         self.normal_textbox_z = None
 
+        # Color settings
+        self.color_label = None
+        self.color_button = None
+
+        self.colors = None
+        self.colors_window = None
+
         # Save
         self.save_button = None
 
@@ -240,8 +248,19 @@ class SettingsWindow:
             self.parent_select_box.grid(row=current_row + 1, column=1, padx=(5, 0), pady=(10, 0),
                                         columnspan=4)
 
+            # Color Button
+
+            self.color_label = customtkinter.CTkLabel(self.main_frame, text="Color Settings: ", justify="center",
+                                                      width=40, font=("Franklin Gothic Medium", 22))
+
+            self.color_label.grid(row=current_row + 2, column=0, padx=15, pady=(10, 0))
+
+            self.color_button = customtkinter.CTkButton(master=self.main_frame, text="Open Colors",
+                                                        command=self.open_colors_window)
+            self.color_button.grid(row=current_row + 2, column=1, padx=(50, 0), pady=(10, 0), columnspan=4)
+
             # If the Object has unique attributes:
-            current_row += 2
+            current_row += 3
 
             if self.name == "Sphere":
 
@@ -249,12 +268,12 @@ class SettingsWindow:
                 self.radius_label = customtkinter.CTkLabel(self.main_frame, text="Radius: ", justify="center",
                                                            width=20, font=("Franklin Gothic Medium", 22))
 
-                self.radius_label.grid(row=5, column=0, padx=15, pady=(10, 0))
+                self.radius_label.grid(row=6, column=0, padx=15, pady=(10, 0))
 
                 self.radius = self.object_to_display.radius
 
                 self.radius_textbox = ScrollableEntry(master=self.main_frame, placeholder_text=self.radius, column=1,
-                                                      row=5, text_in_front="r: ", greater_than_zero=True,
+                                                      row=6, text_in_front="r: ", greater_than_zero=True,
                                                       pady=(10, 0), sticky="w")
                 current_row += 1
 
@@ -263,23 +282,23 @@ class SettingsWindow:
                 self.normal_label = customtkinter.CTkLabel(self.main_frame, text="Normal: ", justify="center",
                                                            width=20, font=("Franklin Gothic Medium", 22))
 
-                self.normal_label.grid(row=5, column=0, padx=15, pady=(10, 0))
+                self.normal_label.grid(row=6, column=0, padx=15, pady=(10, 0))
 
                 self.normal = self.object_to_display.normal
 
                 self.normal_textbox_x = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[0],
                                                         column=1,
-                                                        row=5, text_in_front="X: ",
+                                                        row=6, text_in_front="X: ",
                                                         pady=(10, 0))
 
                 self.normal_textbox_y = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[1],
                                                         column=1,
-                                                        row=6, text_in_front="Y: ",
+                                                        row=7, text_in_front="Y: ",
                                                         pady=(10, 0))
 
                 self.normal_textbox_z = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[2],
                                                         column=1,
-                                                        row=7, text_in_front="Z: ",
+                                                        row=8, text_in_front="Z: ",
                                                         pady=(10, 0))
                 current_row += 3
 
@@ -347,3 +366,16 @@ class SettingsWindow:
 
         # If no object was found.
         # Let's hope that doesn't happen.
+
+    def open_colors_window(self) -> None:
+        """
+        Opens the window to access the color settings. Takes over the current window.
+        """
+        print("Debug Log: Opening Colors Window.")
+
+        self.colors_window = ColorSettingsWindow(self.object_to_display, self.toplevel, self)
+        self.colors_window.open_window()
+
+        print("Debug Log: Closing Colors Window.")
+
+        self.colors_window = None
