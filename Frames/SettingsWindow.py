@@ -119,7 +119,7 @@ class SettingsWindow:
 
         # Window Constants
         self.width = 400
-        self.height = 400
+        self.height = 500
 
         self.toplevel = None
 
@@ -188,7 +188,7 @@ class SettingsWindow:
 
         # Most Important Frame
         self.main_frame = customtkinter.CTkFrame(self.toplevel)
-        self.main_frame.configure(border_width=2, height=390, width=390)
+        self.main_frame.configure(border_width=2, height=490, width=390)
         self.main_frame.grid(row=1, column=0, padx=5, pady=5, sticky="nw")
         self.main_frame.grid_propagate(False)
 
@@ -305,13 +305,19 @@ class SettingsWindow:
                 current_row += 3
 
         # Save Buttons
-        self.save_button_without_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
-                                                                 command=self.update_object_with_new_data)
+        self.save_button_without_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes ",
+                                                                 command=self.update_object_with_new_data, width=150)
         self.save_button_without_close.grid(row=current_row, column=0, padx=5, pady=(10, 0), sticky="sw")
 
         self.save_button_with_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes & Exit",
-                                                              command=self.save_and_close)
-        self.save_button_with_close.grid(row=current_row, column=1, padx=5, pady=(10, 0), sticky="sw")
+                                                              command=self.save_and_close, width=150)
+        self.save_button_with_close.grid(row=current_row, column=1, padx=5, pady=(10, 0), sticky="sw", columnspan=4)
+
+        self.close_without_saving_button = customtkinter.CTkButton(master=self.main_frame,
+                                                                   text="Exit & Discard Changes",
+                                                                   command=self.close_self, width=150)
+        self.close_without_saving_button.grid(row=current_row + 1, column=0, padx=5, pady=(10, 0),
+                                              sticky="sw", columnspan=4)
 
         # Actually Running:
         self.toplevel.grab_set()
@@ -444,4 +450,3 @@ class SettingsWindow:
         """
         self.update_object_with_new_data()
         self.close_self()
-
