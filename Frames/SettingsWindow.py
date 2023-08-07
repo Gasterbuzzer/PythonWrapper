@@ -119,7 +119,7 @@ class SettingsWindow:
 
         # Window Constants
         self.width = 400
-        self.height = 860
+        self.height = 870
 
         self.toplevel = None
 
@@ -209,28 +209,28 @@ class SettingsWindow:
 
         # Most Important Frame
         self.main_frame = customtkinter.CTkFrame(self.toplevel)
-        self.main_frame.configure(border_width=2, height=self.height-10, width=self.width-10)
+        self.main_frame.configure(border_width=2, height=self.height - 10, width=self.width - 10)
         self.main_frame.grid(row=1, column=0, padx=5, pady=5, sticky="nw")
         self.main_frame.grid_propagate(False)
 
         # Global Attributes are added first:
 
         # Translate
-        self.position_label = customtkinter.CTkLabel(self.main_frame, text="Translation: ", justify="center",
-                                                     width=20, font=("Franklin Gothic Medium", 22))
-        self.position_label.grid(row=0, column=0, padx=15, pady=(10, 0))
+        self.translate_label = customtkinter.CTkLabel(self.main_frame, text="Translation: ", justify="center",
+                                                      width=20, font=("Franklin Gothic Medium", 22))
+        self.translate_label.grid(row=0, column=0, padx=15, pady=(10, 0))
 
         self.translation = self.object_to_display.translation
 
-        self.position_textbox_x = ScrollableEntry(master=self.main_frame,
-                                                  placeholder_text=self.translation[0], column=1,
-                                                  text_in_front="X: ")
-        self.position_textbox_y = ScrollableEntry(master=self.main_frame,
-                                                  placeholder_text=self.translation[1], column=1, row=1,
-                                                  text_in_front="Y: ")
-        self.position_textbox_z = ScrollableEntry(master=self.main_frame,
-                                                  placeholder_text=self.translation[2], column=1, row=2,
-                                                  text_in_front="Z: ", pady=(10, 0))
+        self.translate_textbox_0 = ScrollableEntry(master=self.main_frame,
+                                                   placeholder_text=self.translation[0], column=1,
+                                                   text_in_front="X: ")
+        self.translate_textbox_1 = ScrollableEntry(master=self.main_frame,
+                                                   placeholder_text=self.translation[1], column=1, row=1,
+                                                   text_in_front="Y: ")
+        self.translate_textbox_2 = ScrollableEntry(master=self.main_frame,
+                                                   placeholder_text=self.translation[2], column=1, row=2,
+                                                   text_in_front="Z: ", pady=(10, 0))
 
         # Rotation
         self.rotation_label = customtkinter.CTkLabel(self.main_frame, text="Rotation: ", justify="center",
@@ -413,6 +413,14 @@ class SettingsWindow:
             if object_found is not None:
                 # If the Object is not empty (meaning we didn't find it)
                 print("\nDebug Log: Found the object, writing the object new.")
+
+                # Default Element Information Writing
+                # Translation
+                self.translation[0] = self.translate_textbox_0.get_value()
+                self.translation[1] = self.translate_textbox_1.get_value()
+                self.translation[2] = self.translate_textbox_2.get_value()
+
+                # if
 
                 # Do the writing
                 if self.name == "Sphere":
