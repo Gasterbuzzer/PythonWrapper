@@ -24,7 +24,7 @@ class ColorSettingsWindow:
 
         # Window Constants
         self.width = 400
-        self.height = 800
+        self.height = 850
 
         self.toplevel = None
 
@@ -94,7 +94,7 @@ class ColorSettingsWindow:
 
         # Most Important Frame
         self.main_frame = customtkinter.CTkFrame(self.toplevel)
-        self.main_frame.configure(border_width=2, height=790, width=390)
+        self.main_frame.configure(border_width=2, height=self.height-10, width=self.width-10)
         self.main_frame.grid(row=1, column=0, padx=5, pady=5, sticky="nw")
         self.main_frame.grid_propagate(False)
 
@@ -205,19 +205,25 @@ class ColorSettingsWindow:
                                                text_in_front="Shininess: ", pady=(20, 0))
 
         # Save Button
+        save_padx = 0
+        save_pady = (20, 0)
+        columnspan = 8
+
         self.save_button_without_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes ",
                                                                  command=self.save_colors, width=200)
-        self.save_button_without_close.grid(row=17, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
+        self.save_button_without_close.grid(row=17, column=1, padx=save_padx, pady=(30, 0), sticky="n",
+                                            columnspan=columnspan)
 
         self.save_button_with_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes & Exit",
                                                               command=self.save_and_close, width=200)
-        self.save_button_with_close.grid(row=18, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
+        self.save_button_with_close.grid(row=18, column=1, padx=save_padx, pady=save_pady, sticky="n",
+                                         columnspan=columnspan)
 
         self.close_without_saving_button = customtkinter.CTkButton(master=self.main_frame,
                                                                    text="Exit & Discard Unsaved Changes",
                                                                    command=self.close_self, width=200)
-        self.close_without_saving_button.grid(row=19, column=0, padx=5, pady=(10, 0),
-                                              sticky="sw", columnspan=5)
+        self.close_without_saving_button.grid(row=19, column=1, padx=save_padx, pady=save_pady,
+                                              sticky="n", columnspan=columnspan)
 
         # Actually Running:
         self.toplevel.grab_set()

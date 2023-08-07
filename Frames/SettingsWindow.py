@@ -119,7 +119,7 @@ class SettingsWindow:
 
         # Window Constants
         self.width = 400
-        self.height = 500
+        self.height = 860
 
         self.toplevel = None
 
@@ -131,6 +131,27 @@ class SettingsWindow:
         self.position_textbox_x = None
         self.position_textbox_y = None
         self.position_textbox_z = None
+
+        # Translation
+        self.translate_label = None
+        self.translate_textbox_0 = None
+        self.translate_textbox_1 = None
+        self.translate_textbox_2 = None
+        self.translation = None
+
+        # Rotation
+        self.rotation_label = None
+        self.rotation_textbox_0 = None
+        self.rotation_textbox_1 = None
+        self.rotation_textbox_2 = None
+        self.rotation = None
+
+        # Scale
+        self.scale_label = None
+        self.scale_textbox_0 = None
+        self.scale_textbox_1 = None
+        self.scale_textbox_2 = None
+        self.scale = None
 
         # Index
         self.index_label = None
@@ -188,11 +209,64 @@ class SettingsWindow:
 
         # Most Important Frame
         self.main_frame = customtkinter.CTkFrame(self.toplevel)
-        self.main_frame.configure(border_width=2, height=490, width=390)
+        self.main_frame.configure(border_width=2, height=self.height-10, width=self.width-10)
         self.main_frame.grid(row=1, column=0, padx=5, pady=5, sticky="nw")
         self.main_frame.grid_propagate(False)
 
-        current_row = 3
+        # Global Attributes are added first:
+
+        # Translate
+        self.position_label = customtkinter.CTkLabel(self.main_frame, text="Translation: ", justify="center",
+                                                     width=20, font=("Franklin Gothic Medium", 22))
+        self.position_label.grid(row=0, column=0, padx=15, pady=(10, 0))
+
+        self.translation = self.object_to_display.translation
+
+        self.position_textbox_x = ScrollableEntry(master=self.main_frame,
+                                                  placeholder_text=self.translation[0], column=1,
+                                                  text_in_front="X: ")
+        self.position_textbox_y = ScrollableEntry(master=self.main_frame,
+                                                  placeholder_text=self.translation[1], column=1, row=1,
+                                                  text_in_front="Y: ")
+        self.position_textbox_z = ScrollableEntry(master=self.main_frame,
+                                                  placeholder_text=self.translation[2], column=1, row=2,
+                                                  text_in_front="Z: ", pady=(10, 0))
+
+        # Rotation
+        self.rotation_label = customtkinter.CTkLabel(self.main_frame, text="Rotation: ", justify="center",
+                                                     width=20, font=("Franklin Gothic Medium", 22))
+        self.rotation_label.grid(row=3, column=0, padx=15, pady=(10, 0))
+
+        self.rotation = self.object_to_display.rotation
+
+        self.rotation_textbox_0 = ScrollableEntry(master=self.main_frame,
+                                                  placeholder_text=self.rotation[0], column=1, row=3,
+                                                  text_in_front="X: ")
+        self.rotation_textbox_1 = ScrollableEntry(master=self.main_frame,
+                                                  placeholder_text=self.rotation[1], column=1, row=4,
+                                                  text_in_front="Y: ")
+        self.rotation_textbox_2 = ScrollableEntry(master=self.main_frame,
+                                                  placeholder_text=self.rotation[2], column=1, row=5,
+                                                  text_in_front="Z: ", pady=(10, 0))
+
+        # Scale
+        self.scale_label = customtkinter.CTkLabel(self.main_frame, text="Scale: ", justify="center",
+                                                  width=20, font=("Franklin Gothic Medium", 22))
+        self.scale_label.grid(row=6, column=0, padx=15, pady=(10, 0))
+
+        self.scale = self.object_to_display.scaling
+
+        self.scale_textbox_0 = ScrollableEntry(master=self.main_frame,
+                                               placeholder_text=self.scale[0], column=1, row=6,
+                                               text_in_front="X: ")
+        self.scale_textbox_1 = ScrollableEntry(master=self.main_frame,
+                                               placeholder_text=self.scale[1], column=1, row=7,
+                                               text_in_front="Y: ")
+        self.scale_textbox_2 = ScrollableEntry(master=self.main_frame,
+                                               placeholder_text=self.scale[2], column=1, row=8,
+                                               text_in_front="Z: ", pady=(10, 0))
+
+        current_row = 15
 
         # Coordinates of Object (If it is not a Group)
         if self.name == "Group":
@@ -202,18 +276,18 @@ class SettingsWindow:
             # Label and Textbox for Position
             self.position_label = customtkinter.CTkLabel(self.main_frame, text="Position: ", justify="center",
                                                          width=20, font=("Franklin Gothic Medium", 22))
-            self.position_label.grid(row=0, column=0, padx=15, pady=(10, 0))
+            self.position_label.grid(row=9, column=0, padx=15, pady=(10, 0))
 
             self.object_coordinates = self.object_to_display.position
 
             self.position_textbox_x = ScrollableEntry(master=self.main_frame,
                                                       placeholder_text=self.object_coordinates[0], column=1,
-                                                      text_in_front="X: ")
+                                                      text_in_front="X: ", row=9)
             self.position_textbox_y = ScrollableEntry(master=self.main_frame,
-                                                      placeholder_text=self.object_coordinates[1], column=1, row=1,
+                                                      placeholder_text=self.object_coordinates[1], column=1, row=10,
                                                       text_in_front="Y: ")
             self.position_textbox_z = ScrollableEntry(master=self.main_frame,
-                                                      placeholder_text=self.object_coordinates[2], column=1, row=2,
+                                                      placeholder_text=self.object_coordinates[2], column=1, row=11,
                                                       text_in_front="Z: ")
 
             # Index
@@ -221,12 +295,12 @@ class SettingsWindow:
             self.index_label = customtkinter.CTkLabel(self.main_frame, text="Index: ", justify="center",
                                                       width=20, font=("Franklin Gothic Medium", 22))
 
-            self.index_label.grid(row=current_row, column=0, padx=15, pady=(10, 0))
+            self.index_label.grid(row=12, column=0, padx=15, pady=(10, 0))
 
             self.index = self.object_to_display.index
 
             self.index_textbox = ScrollableEntry(master=self.main_frame,
-                                                 placeholder_text=self.index, column=1, row=current_row,
+                                                 placeholder_text=self.index, column=1, row=12,
                                                  text_in_front="Index: ", _type="int", disable_negative_zero=True,
                                                  pady=(10, 0))
 
@@ -242,12 +316,12 @@ class SettingsWindow:
             self.parent_label = customtkinter.CTkLabel(self.main_frame, text="Parent: ", justify="center",
                                                        width=20, font=("Franklin Gothic Medium", 22))
 
-            self.parent_label.grid(row=current_row + 1, column=0, padx=15, pady=(10, 0))
+            self.parent_label.grid(row=13, column=0, padx=15, pady=(10, 0))
 
             self.parent_select_box = customtkinter.CTkComboBox(self.main_frame,
                                                                values=values_for_parent, width=200, height=24)
             self.parent_select_box.set(str(self.parent))
-            self.parent_select_box.grid(row=current_row + 1, column=1, padx=(5, 0), pady=(10, 0),
+            self.parent_select_box.grid(row=13, column=1, padx=(5, 0), pady=(10, 0),
                                         columnspan=4)
 
             # Color Button
@@ -255,14 +329,13 @@ class SettingsWindow:
             self.color_label = customtkinter.CTkLabel(self.main_frame, text="Color Settings: ", justify="center",
                                                       width=40, font=("Franklin Gothic Medium", 22))
 
-            self.color_label.grid(row=current_row + 2, column=0, padx=15, pady=(10, 0))
+            self.color_label.grid(row=14, column=0, padx=15, pady=(10, 0))
 
             self.color_button = customtkinter.CTkButton(master=self.main_frame, text="Open Colors",
                                                         command=self.open_colors_window)
-            self.color_button.grid(row=current_row + 2, column=1, padx=(50, 0), pady=(10, 0), columnspan=4)
+            self.color_button.grid(row=14, column=1, padx=(50, 0), pady=(10, 0), columnspan=4)
 
             # If the Object has unique attributes:
-            current_row += 3
 
             if self.name == "Sphere":
 
@@ -270,54 +343,54 @@ class SettingsWindow:
                 self.radius_label = customtkinter.CTkLabel(self.main_frame, text="Radius: ", justify="center",
                                                            width=20, font=("Franklin Gothic Medium", 22))
 
-                self.radius_label.grid(row=6, column=0, padx=15, pady=(10, 0))
+                self.radius_label.grid(row=15, column=0, padx=15, pady=(10, 0))
 
                 self.radius = self.object_to_display.radius
 
                 self.radius_textbox = ScrollableEntry(master=self.main_frame, placeholder_text=self.radius, column=1,
-                                                      row=6, text_in_front="r: ", greater_than_zero=True,
+                                                      row=15, text_in_front="r: ", greater_than_zero=True,
                                                       pady=(10, 0), sticky="w")
-                current_row += 1
+                current_row += 2
 
             elif self.name == "Halfspace":
                 # Normal Vector
                 self.normal_label = customtkinter.CTkLabel(self.main_frame, text="Normal: ", justify="center",
                                                            width=20, font=("Franklin Gothic Medium", 22))
 
-                self.normal_label.grid(row=6, column=0, padx=15, pady=(10, 0))
+                self.normal_label.grid(row=15, column=0, padx=15, pady=(10, 0))
 
                 self.normal = self.object_to_display.normal
 
                 self.normal_textbox_x = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[0],
                                                         column=1,
-                                                        row=6, text_in_front="X: ",
+                                                        row=15, text_in_front="X: ",
                                                         pady=(10, 0))
 
                 self.normal_textbox_y = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[1],
                                                         column=1,
-                                                        row=7, text_in_front="Y: ",
+                                                        row=16, text_in_front="Y: ",
                                                         pady=(10, 0))
 
                 self.normal_textbox_z = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[2],
                                                         column=1,
-                                                        row=8, text_in_front="Z: ",
+                                                        row=17, text_in_front="Z: ",
                                                         pady=(10, 0))
                 current_row += 3
 
         # Save Buttons
         self.save_button_without_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes ",
                                                                  command=self.update_object_with_new_data, width=200)
-        self.save_button_without_close.grid(row=current_row, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
+        self.save_button_without_close.grid(row=current_row, column=1, padx=5, pady=(40, 0), sticky="n", columnspan=5)
 
         self.save_button_with_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes & Exit",
                                                               command=self.save_and_close, width=200)
-        self.save_button_with_close.grid(row=current_row + 1, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
+        self.save_button_with_close.grid(row=current_row + 1, column=1, padx=5, pady=(20, 0), sticky="n", columnspan=5)
 
         self.close_without_saving_button = customtkinter.CTkButton(master=self.main_frame,
                                                                    text="Exit & Discard Unsaved Changes",
                                                                    command=self.close_self, width=200)
-        self.close_without_saving_button.grid(row=current_row + 2, column=0, padx=5, pady=(10, 0),
-                                              sticky="sw", columnspan=5)
+        self.close_without_saving_button.grid(row=current_row + 2, column=1, padx=5, pady=(20, 0),
+                                              sticky="n", columnspan=5)
 
         # Actually Running:
         self.toplevel.grab_set()
