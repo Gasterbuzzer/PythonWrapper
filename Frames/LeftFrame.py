@@ -169,7 +169,15 @@ class LeftFrame:
                 print(f"Weak Error Log: Sphere Index for {group_index} is not given.")
                 i = None
 
-            return {"sphere": Sphere(position, radius, color, i)}
+            if translate_attribute is None:
+                translate_attribute = [0, 0, 0]
+            if rotate_attribute is None:
+                rotate_attribute = [0, 0, 0]
+            if scaling_attribute is None:
+                scaling_attribute = [0, 0, 0]
+
+            return {"sphere": Sphere(position, radius, color, i, translation=translate_attribute,
+                                     rotation=rotate_attribute, scaling=scaling_attribute)}
 
         elif object_name.lower() == "union":
 
@@ -186,7 +194,72 @@ class LeftFrame:
                     union_elements.append(self.recurse_over_app(_e, _e_name))
 
             # Creating a new group with the data of it:
-            new_group = Group(union_elements)
+
+            if translate_attribute is None:
+                translate_attribute = [0, 0, 0]
+            if rotate_attribute is None:
+                rotate_attribute = [0, 0, 0]
+            if scaling_attribute is None:
+                scaling_attribute = [0, 0, 0]
+
+            new_group = Group(union_elements, translation=translate_attribute, rotation=rotate_attribute,
+                              scaling=scaling_attribute)
+
+            return {"Group": new_group}
+
+        elif object_name.lower() == "intersection":
+
+            union_elements = []
+
+            for _e in object_app["intersection"]:
+
+                # Getting Object Name
+                _e_name = "NoNameFoundRecursive"
+                for name in _e:
+                    _e_name = name
+
+                if _e_name != "index":
+                    union_elements.append(self.recurse_over_app(_e, _e_name))
+
+            # Creating a new group with the data of it:
+
+            if translate_attribute is None:
+                translate_attribute = [0, 0, 0]
+            if rotate_attribute is None:
+                rotate_attribute = [0, 0, 0]
+            if scaling_attribute is None:
+                scaling_attribute = [0, 0, 0]
+
+            new_group = Group(union_elements, translation=translate_attribute, rotation=rotate_attribute,
+                              scaling=scaling_attribute)
+
+            return {"Group": new_group}
+
+        elif object_name.lower() == "exclusion":
+
+            union_elements = []
+
+            for _e in object_app["exclusion"]:
+
+                # Getting Object Name
+                _e_name = "NoNameFoundRecursive"
+                for name in _e:
+                    _e_name = name
+
+                if _e_name != "index":
+                    union_elements.append(self.recurse_over_app(_e, _e_name))
+
+            # Creating a new group with the data of it:
+
+            if translate_attribute is None:
+                translate_attribute = [0, 0, 0]
+            if rotate_attribute is None:
+                rotate_attribute = [0, 0, 0]
+            if scaling_attribute is None:
+                scaling_attribute = [0, 0, 0]
+
+            new_group = Group(union_elements, translation=translate_attribute, rotation=rotate_attribute,
+                              scaling=scaling_attribute)
 
             return {"Group": new_group}
 
@@ -312,7 +385,15 @@ class LeftFrame:
                 print(f"Weak Error Log: Half-Space Index for {group_index} is not given.")
                 i = None
 
-            return {"halfspace": HalfSpace(position, normal, color, i)}
+            if translate_attribute is None:
+                translate_attribute = [0, 0, 0]
+            if rotate_attribute is None:
+                rotate_attribute = [0, 0, 0]
+            if scaling_attribute is None:
+                scaling_attribute = [0, 0, 0]
+
+            return {"halfspace": HalfSpace(position, normal, color, i, translation=translate_attribute,
+                                           rotation=rotate_attribute, scaling=scaling_attribute)}
 
         else:
             return {"ObjectNotFound": object_name}
