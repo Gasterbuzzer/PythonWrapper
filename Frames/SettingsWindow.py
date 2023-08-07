@@ -4,6 +4,19 @@ import customtkinter
 from Frames.CustomElements.scrollableentry import ScrollableEntry
 from Frames.ColorSettingsWindow import ColorSettingsWindow
 
+def has_non_zero_element(list_to_check: list) -> bool:
+    """
+    Checks if a list has a non-zero element.
+    :param list_to_check: List to check in.
+    :return: True if it contains one and False if not.
+    """
+
+    for e in list_to_check:
+        if e != 0:
+            return True
+
+    return False
+
 
 def recurse_until_found_or_not(object_to_find, current_object, object_to_find_name: str, debug: bool = False) -> object:
     """
@@ -420,7 +433,24 @@ class SettingsWindow:
                 self.translation[1] = self.translate_textbox_1.get_value()
                 self.translation[2] = self.translate_textbox_2.get_value()
 
-                # if
+                if has_non_zero_element(self.translation):
+                    object_found.translation = self.translation
+
+                # Rotation
+                self.rotation[0] = self.rotation_textbox_0.get_value()
+                self.rotation[1] = self.rotation_textbox_1.get_value()
+                self.rotation[2] = self.rotation_textbox_2.get_value()
+
+                if has_non_zero_element(self.rotation):
+                    object_found.rotation = self.rotation
+
+                # Scale
+                self.scale[0] = self.scale_textbox_0.get_value()
+                self.scale[1] = self.scale_textbox_1.get_value()
+                self.scale[2] = self.scale_textbox_2.get_value()
+
+                if has_non_zero_element(self.scale):
+                    object_found.scaling = self.scale
 
                 # Do the writing
                 if self.name == "Sphere":
