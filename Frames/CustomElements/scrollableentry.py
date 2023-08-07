@@ -10,7 +10,7 @@ class ScrollableEntry:
 
     def __init__(self, master, width=100, height=7, placeholder_text="23", justify="center",
                  row=0, column=0, padx=(5, 0), pady=(10, 0), text_in_front="", _type="float",
-                 disable_negative_zero=False, greater_than_zero=False) -> None:
+                 disable_negative_zero=False, greater_than_zero=False, sticky="") -> None:
         """
         Class File containing a Scrollable Entry Widget
         :param master:
@@ -29,30 +29,31 @@ class ScrollableEntry:
         self.type = _type
         self.disable_negative_zero = disable_negative_zero
         self.greater_than_zero = greater_than_zero
+        self.sticky = sticky
 
         if self.text_in_front != "":
             # Text in front:
             self.front_label = customtkinter.CTkLabel(self.master, text=self.text_in_front, justify="right",
                                                       width=20)
-            self.front_label.grid(row=self.row, column=self.column, padx=self.padx, pady=self.pady)
+            self.front_label.grid(row=self.row, column=self.column, padx=self.padx, pady=self.pady, sticky=self.sticky)
 
             self.column += 1
 
         # First Button (Minus)
         self.button_minus = customtkinter.CTkButton(master=self.master, text="-", width=20, height=self.height,
                                                     command=self.minus_value)
-        self.button_minus.grid(row=self.row, column=self.column, padx=(5, 0), pady=self.pady)
+        self.button_minus.grid(row=self.row, column=self.column, padx=(5, 0), pady=self.pady, sticky=self.sticky)
 
         # Entry Box
         self.textbox = customtkinter.CTkEntry(master=self.master, width=self.width, height=self.height,
                                               placeholder_text=self.placeholder_text, justify=self.justify)
 
-        self.textbox.grid(row=self.row, column=self.column + 1, padx=(5, 0), pady=self.pady)
+        self.textbox.grid(row=self.row, column=self.column + 1, padx=(5, 0), pady=self.pady, sticky=self.sticky)
 
         # Second Button (Plus)
         self.button_plus = customtkinter.CTkButton(master=self.master, text="+", width=20, height=self.height,
                                                    command=self.plus_value)
-        self.button_plus.grid(row=self.row, column=self.column + 2, padx=self.padx, pady=self.pady)
+        self.button_plus.grid(row=self.row, column=self.column + 2, padx=self.padx, pady=self.pady, sticky=self.sticky)
 
     def get_value(self) -> float:
         """

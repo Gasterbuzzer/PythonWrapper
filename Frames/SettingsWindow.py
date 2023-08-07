@@ -136,6 +136,11 @@ class SettingsWindow:
         self.index = None
         self.index_textbox = None
 
+        # Parent
+        self.parent_label = None
+        self.parent = None
+        self.parent_select_box = None
+
         # Radius
         self.radius_label = None
         self.radius = None
@@ -215,8 +220,28 @@ class SettingsWindow:
                                                  text_in_front="Index: ", _type="int", disable_negative_zero=True,
                                                  pady=(10, 0))
 
+            # Parent
+
+            self.parent = self.object_to_display.parent
+
+            values_for_parent = [str(self.parent)]
+
+            if "None" not in values_for_parent:
+                values_for_parent.append("None")
+
+            self.parent_label = customtkinter.CTkLabel(self.main_frame, text="Parent: ", justify="center",
+                                                       width=20, font=("Franklin Gothic Medium", 22))
+
+            self.parent_label.grid(row=current_row + 1, column=0, padx=15, pady=(10, 0))
+
+            self.parent_select_box = customtkinter.CTkComboBox(self.main_frame,
+                                                               values=values_for_parent, width=200, height=24)
+            self.parent_select_box.set(str(self.parent))
+            self.parent_select_box.grid(row=current_row + 1, column=1, padx=(5, 0), pady=(10, 0),
+                                        columnspan=4)
+
             # If the Object has unique attributes:
-            current_row += 1
+            current_row += 2
 
             if self.name == "Sphere":
 
@@ -224,13 +249,13 @@ class SettingsWindow:
                 self.radius_label = customtkinter.CTkLabel(self.main_frame, text="Radius: ", justify="center",
                                                            width=20, font=("Franklin Gothic Medium", 22))
 
-                self.radius_label.grid(row=4, column=0, padx=15, pady=(10, 0))
+                self.radius_label.grid(row=5, column=0, padx=15, pady=(10, 0))
 
                 self.radius = self.object_to_display.radius
 
                 self.radius_textbox = ScrollableEntry(master=self.main_frame, placeholder_text=self.radius, column=1,
-                                                      row=4, text_in_front="r: ", greater_than_zero=True,
-                                                      pady=(10, 0))
+                                                      row=5, text_in_front="r: ", greater_than_zero=True,
+                                                      pady=(10, 0), sticky="w")
                 current_row += 1
 
             elif self.name == "Halfspace":
@@ -238,23 +263,23 @@ class SettingsWindow:
                 self.normal_label = customtkinter.CTkLabel(self.main_frame, text="Normal: ", justify="center",
                                                            width=20, font=("Franklin Gothic Medium", 22))
 
-                self.normal_label.grid(row=4, column=0, padx=15, pady=(10, 0))
+                self.normal_label.grid(row=5, column=0, padx=15, pady=(10, 0))
 
                 self.normal = self.object_to_display.normal
 
                 self.normal_textbox_x = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[0],
                                                         column=1,
-                                                        row=4, text_in_front="X: ",
+                                                        row=5, text_in_front="X: ",
                                                         pady=(10, 0))
 
                 self.normal_textbox_y = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[1],
                                                         column=1,
-                                                        row=5, text_in_front="Y: ",
+                                                        row=6, text_in_front="Y: ",
                                                         pady=(10, 0))
 
                 self.normal_textbox_z = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[2],
                                                         column=1,
-                                                        row=6, text_in_front="Z: ",
+                                                        row=7, text_in_front="Z: ",
                                                         pady=(10, 0))
                 current_row += 3
 
@@ -292,6 +317,7 @@ class SettingsWindow:
                     self.object_coordinates[2] = self.position_textbox_z.get_value()
                     self.index = self.index_textbox.get_value()
                     self.radius = self.radius_textbox.get_value()
+                    self.parent = self.parent_select_box.get()
 
                     object_found.position = self.object_coordinates
 
@@ -299,11 +325,14 @@ class SettingsWindow:
 
                     object_found.radius = self.radius
 
+                    object_found.parent = self.parent
+
                 elif self.name == "Halfspace":
                     self.object_coordinates[0] = self.position_textbox_x.get_value()
                     self.object_coordinates[1] = self.position_textbox_y.get_value()
                     self.object_coordinates[2] = self.position_textbox_z.get_value()
                     self.index = self.index_textbox.get_value()
+                    self.parent = self.parent_select_box.get()
 
                     self.normal[0] = self.normal_textbox_x.get_value()
                     self.normal[1] = self.normal_textbox_y.get_value()
@@ -312,6 +341,7 @@ class SettingsWindow:
                     object_found.position = self.object_coordinates
                     object_found.index = self.index
                     object_found.normal = self.normal
+                    object_found.parent = self.parent
 
                 return
 
