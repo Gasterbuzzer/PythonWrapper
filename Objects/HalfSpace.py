@@ -11,7 +11,7 @@ class HalfSpace:
     def __init__(self, position=None, normal=None, color=None, index=1, parent=None) -> None:
         """
         Class representing a Half Space Object.
-        :param position: (x,y,z) Example: [0, 0, 0]
+        :param position: (X, y, z) Example: [0, 0, 0]
         :param normal: (x,y,z) Example: [1, 0, 0]
         :param color: Color Object
         :param index: (int) Index of Half Space.

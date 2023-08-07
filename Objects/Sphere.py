@@ -11,7 +11,7 @@ class Sphere:
     def __init__(self, position=None, radius=1.0, color=None, index=1, parent=None) -> None:
         """
         Class representing a Sphere Object.
-        :param position: (x, y, z) Example: [0, 0, 0]
+        :param position: (X, y, z) Example: [0, 0, 0]
         :param radius: Radius of Sphere
         :param color: Color Object
         :param index: (int) Index of Sphere.
