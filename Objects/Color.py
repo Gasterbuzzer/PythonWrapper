@@ -19,15 +19,15 @@ class Color:
 
         # Default Values
         if refracted is None:
-            refracted = [1, 1, 1]
+            refracted = [0, 0, 0]
         if reflected is None:
-            reflected = [1, 1, 1]
+            reflected = [0, 0, 0]
         if specular is None:
-            specular = [1, 1, 1]
+            specular = [0, 0, 0]
         if diffuse is None:
-            diffuse = [1, 1, 1]
+            diffuse = [0, 0, 0]
         if ambient is None:
-            ambient = [1, 1, 1]
+            ambient = [0, 0, 0]
         if shininess is None:
             shininess = 1
 
