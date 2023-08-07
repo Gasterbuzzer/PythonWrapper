@@ -373,7 +373,8 @@ class SettingsWindow:
         """
         print("Debug Log: Opening Colors Window.")
 
-        self.colors_window = ColorSettingsWindow(self.object_to_display, self.toplevel, self)
+        self.colors_window = ColorSettingsWindow(self.object_to_display, self.toplevel, self,
+                                                 recurse_until_found_or_not)
         self.colors_window.open_window()
 
         print("Debug Log: Closing Colors Window.")
