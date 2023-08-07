@@ -162,7 +162,9 @@ class SettingsWindow:
         self.colors_window = None
 
         # Save
-        self.save_button = None
+        self.save_button_without_close = None
+        self.save_button_with_close = None
+        self.close_without_saving_button = None
 
         # Later Initialized Values
         self.object_coordinates = None
@@ -302,10 +304,14 @@ class SettingsWindow:
                                                         pady=(10, 0))
                 current_row += 3
 
-        # Save Button
-        self.save_button = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
-                                                   command=self.update_object_with_new_data)
-        self.save_button.grid(row=current_row, column=0, padx=5, pady=(10, 0), sticky="sw")
+        # Save Buttons
+        self.save_button_without_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
+                                                                 command=self.update_object_with_new_data)
+        self.save_button_without_close.grid(row=current_row, column=0, padx=5, pady=(10, 0), sticky="sw")
+
+        self.save_button_with_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes & Exit",
+                                                              command=self.save_and_close)
+        self.save_button_with_close.grid(row=current_row, column=1, padx=5, pady=(10, 0), sticky="sw")
 
         # Actually Running:
         self.toplevel.grab_set()
@@ -380,3 +386,62 @@ class SettingsWindow:
         print("Debug Log: Closing Colors Window.")
 
         self.colors_window = None
+
+    def close_self(self) -> None:
+        """
+        Closes the current Window.
+        """
+
+        # Label and Textbox for Position
+        self.position_label.destroy()
+        self.position_textbox_x.destroy()
+        self.position_textbox_y.destroy()
+        self.position_textbox_z.destroy()
+
+        # Index
+        self.index_label.destroy()
+        self.index_textbox.destroy()
+
+        # Parent
+        self.parent_label.destroy()
+        self.parent_select_box.destroy()
+
+        # Radius
+        if self.radius_label is not None:
+            self.radius_label.destroy()
+            self.radius_textbox.destroy()
+
+        # Normal Vector
+        if self.normal_label is not None:
+            self.normal_label.destroy()
+            self.normal_textbox_x.destroy()
+            self.normal_textbox_y.destroy()
+            self.normal_textbox_z.destroy()
+
+        # Color settings
+        self.color_label.destroy()
+        self.color_button.destroy()
+
+        if self.colors_window is not None:
+            self.colors_window.destroy()
+
+        # Save
+        self.save_button_without_close.destroy()
+        self.save_button_with_close.destroy()
+
+        if self.close_without_saving_button is not None:
+            self.close_without_saving_button.destroy()
+
+        # Frame
+        self.main_frame.destroy()
+
+        # Window
+        self.toplevel.destroy()
+
+    def save_and_close(self) -> None:
+        """
+        Saves and closes the window.
+        """
+        self.update_object_with_new_data()
+        self.close_self()
+

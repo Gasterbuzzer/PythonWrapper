@@ -120,3 +120,18 @@ class ScrollableEntry:
 
         self.textbox.delete(0, len(text_box_value))
         self.textbox.insert(0, current_value)
+
+    def destroy(self) -> None:
+        """
+        Destroy the custom element.
+        """
+        self.front_label.destroy()
+
+        # First Button (Minus)
+        self.button_minus.destroy()
+
+        # Entry Box
+        self.textbox.destroy()
+
+        # Second Button (Plus)
+        self.button_plus.destroy()
