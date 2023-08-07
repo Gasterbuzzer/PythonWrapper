@@ -1,16 +1,1 @@
-
-Frames/__pycache__/__init__.cpython-310.pyc
-Frames/__pycache__/__init__.cpython-311.pyc
-Frames/__pycache__/BottomRightFrame.cpython-310.pyc
-Frames/__pycache__/BottomRightFrame.cpython-311.pyc
-Frames/__pycache__/LeftFrame.cpython-310.pyc
-Frames/__pycache__/LeftFrame.cpython-311.pyc
-Frames/__pycache__/MiddleRightFrame.cpython-311.pyc
-Frames/__pycache__/TopRightFrame.cpython-310.pyc
-Frames/__pycache__/MiddleRightFrame.cpython-310.pyc
-Frames/__pycache__/TopRightFrame.cpython-311.pyc
-Objects/__pycache__/__init__.cpython-311.pyc
-Objects/__pycache__/Color.cpython-311.pyc
-Objects/__pycache__/Sphere.cpython-311.pyc
-Frames/__pycache__/SettingsWindow.cpython-311.pyc
 *.pyc
