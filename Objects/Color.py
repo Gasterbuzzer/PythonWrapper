@@ -28,6 +28,8 @@ class Color:
             diffuse = [1, 1, 1]
         if ambient is None:
             ambient = [1, 1, 1]
+        if shininess is None:
+            shininess = 1
 
         # Saving Values
         self.ambient = ambient

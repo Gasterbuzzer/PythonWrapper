@@ -26,6 +26,8 @@ class HalfSpace:
             color = Color()
         if position is None:
             position = [0, 0, 0]
+        if index is None:
+            index = 1
 
         self.position = position
         self.normal = normal

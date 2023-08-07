@@ -10,7 +10,7 @@ class ScrollableEntry:
 
     def __init__(self, master, width=100, height=7, placeholder_text="23", justify="center",
                  row=0, column=0, padx=(5, 0), pady=(10, 0), text_in_front="", _type="float",
-                 disable_negative_zero=False) -> None:
+                 disable_negative_zero=False, greater_than_zero=False) -> None:
         """
         Class File containing a Scrollable Entry Widget
         :param master:
@@ -28,6 +28,7 @@ class ScrollableEntry:
         self.text_in_front = text_in_front
         self.type = _type
         self.disable_negative_zero = disable_negative_zero
+        self.greater_than_zero = greater_than_zero
 
         if self.text_in_front != "":
             # Text in front:
@@ -87,6 +88,9 @@ class ScrollableEntry:
             current_value = float(text_box_value_)
 
         if self.disable_negative_zero and current_value-1 < 0:
+            return
+
+        if self.greater_than_zero and current_value-1 <= 0:
             return
 
         current_value -= 1

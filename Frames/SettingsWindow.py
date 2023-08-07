@@ -136,6 +136,18 @@ class SettingsWindow:
         self.index = None
         self.index_textbox = None
 
+        # Radius
+        self.radius_label = None
+        self.radius = None
+        self.radius_textbox = None
+
+        # Normal Vector
+        self.normal_label = None
+        self.normal = None
+        self.normal_textbox_x = None
+        self.normal_textbox_y = None
+        self.normal_textbox_z = None
+
         # Save
         self.save_button = None
 
@@ -165,6 +177,8 @@ class SettingsWindow:
         self.main_frame.grid(row=1, column=0, padx=5, pady=5, sticky="nw")
         self.main_frame.grid_propagate(False)
 
+        current_row = 3
+
         # Coordinates of Object (If it is not a Group)
         if self.name == "Group":
             print("Debug Log: Given Object is a Group and does not contain any coordinates.")
@@ -188,22 +202,66 @@ class SettingsWindow:
                                                       text_in_front="Z: ")
 
             # Index
+
             self.index_label = customtkinter.CTkLabel(self.main_frame, text="Index: ", justify="center",
                                                       width=20, font=("Franklin Gothic Medium", 22))
 
-            self.index_label.grid(row=3, column=0, padx=15, pady=(10, 0))
+            self.index_label.grid(row=current_row, column=0, padx=15, pady=(10, 0))
 
             self.index = self.object_to_display.index
 
             self.index_textbox = ScrollableEntry(master=self.main_frame,
-                                                 placeholder_text=self.index, column=1, row=3,
+                                                 placeholder_text=self.index, column=1, row=current_row,
                                                  text_in_front="Index: ", _type="int", disable_negative_zero=True,
                                                  pady=(10, 0))
+
+            # If the Object has unique attributes:
+            current_row += 1
+
+            if self.name == "Sphere":
+
+                # Radius
+                self.radius_label = customtkinter.CTkLabel(self.main_frame, text="Radius: ", justify="center",
+                                                           width=20, font=("Franklin Gothic Medium", 22))
+
+                self.radius_label.grid(row=4, column=0, padx=15, pady=(10, 0))
+
+                self.radius = self.object_to_display.radius
+
+                self.radius_textbox = ScrollableEntry(master=self.main_frame, placeholder_text=self.radius, column=1,
+                                                      row=4, text_in_front="r: ", greater_than_zero=True,
+                                                      pady=(10, 0))
+                current_row += 1
+
+            elif self.name == "Halfspace":
+                # Normal Vector
+                self.normal_label = customtkinter.CTkLabel(self.main_frame, text="Normal: ", justify="center",
+                                                           width=20, font=("Franklin Gothic Medium", 22))
+
+                self.normal_label.grid(row=4, column=0, padx=15, pady=(10, 0))
+
+                self.normal = self.object_to_display.normal
+
+                self.normal_textbox_x = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[0],
+                                                        column=1,
+                                                        row=4, text_in_front="X: ",
+                                                        pady=(10, 0))
+
+                self.normal_textbox_y = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[1],
+                                                        column=1,
+                                                        row=5, text_in_front="Y: ",
+                                                        pady=(10, 0))
+
+                self.normal_textbox_z = ScrollableEntry(master=self.main_frame, placeholder_text=self.normal[2],
+                                                        column=1,
+                                                        row=6, text_in_front="Z: ",
+                                                        pady=(10, 0))
+                current_row += 3
 
         # Save Button
         self.save_button = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
                                                    command=self.update_object_with_new_data)
-        self.save_button.grid(row=4, column=0, padx=5, pady=(10, 0), sticky="sw")
+        self.save_button.grid(row=current_row, column=0, padx=5, pady=(10, 0), sticky="sw")
 
         # Actually Running:
         self.toplevel.grab_set()
@@ -233,10 +291,13 @@ class SettingsWindow:
                     self.object_coordinates[1] = self.position_textbox_y.get_value()
                     self.object_coordinates[2] = self.position_textbox_z.get_value()
                     self.index = self.index_textbox.get_value()
+                    self.radius = self.radius_textbox.get_value()
 
                     object_found.position = self.object_coordinates
 
                     object_found.index = self.index
+
+                    object_found.radius = self.radius
 
                 elif self.name == "Halfspace":
                     self.object_coordinates[0] = self.position_textbox_x.get_value()
@@ -244,8 +305,13 @@ class SettingsWindow:
                     self.object_coordinates[2] = self.position_textbox_z.get_value()
                     self.index = self.index_textbox.get_value()
 
+                    self.normal[0] = self.normal_textbox_x.get_value()
+                    self.normal[1] = self.normal_textbox_y.get_value()
+                    self.normal[2] = self.normal_textbox_z.get_value()
+
                     object_found.position = self.object_coordinates
                     object_found.index = self.index
+                    object_found.normal = self.normal
 
                 return
 
