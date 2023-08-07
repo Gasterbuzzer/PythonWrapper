@@ -81,7 +81,8 @@ class LeftFrame:
         print("\n")
 
     def recurse_over_app(self, object_app, object_name="NoNameGiven", group_index="RecursiveFunctionNoGroupGiven",
-                         _index_possibly_given="", debug=False) -> dict:
+                         _index_possibly_given="", debug=False, translate_attribute=None,
+                         scaling_attribute=None, rotate_attribute=None) -> dict:
         """
         Recurse over objects and finds the according objects.
         """
@@ -192,6 +193,7 @@ class LeftFrame:
         elif object_name.lower() == "translation":
 
             new_recursive_object = object_app["translation"]["subject"]
+            factors_of_translation = object_app["translation"]["factors"]
 
             # Getting Object Name
             new_recursive_object_name = "NoNameFoundRecursive"
@@ -203,11 +205,31 @@ class LeftFrame:
                     new_recursive_object_name = name
 
             return self.recurse_over_app(new_recursive_object, new_recursive_object_name,
-                                         _index_possibly_given=index_possibly_given)
+                                         _index_possibly_given=index_possibly_given,
+                                         translate_attribute=factors_of_translation)
+
+        elif object_name.lower() == "rotation":
+
+            new_recursive_object = object_app["rotation"]["subject"]
+            factors_of_rotation = object_app["rotation"]["factors"]
+
+            # Getting Object Name
+            new_recursive_object_name = "NoNameFoundRecursive"
+            for name in new_recursive_object:
+
+                if name.lower() == "index":
+                    index_possibly_given = new_recursive_object["index"]
+                else:
+                    new_recursive_object_name = name
+
+            return self.recurse_over_app(new_recursive_object, new_recursive_object_name,
+                                         _index_possibly_given=index_possibly_given,
+                                         rotate_attribute=factors_of_rotation)
 
         elif object_name.lower() == "scaling":
 
             new_recursive_object = object_app["scaling"]["subject"]
+            factors_of_scaling = object_app["scaling"]["factors"]
 
             # Getting Object Name
             new_recursive_object_name = "NoNameFoundRecursive"
@@ -219,7 +241,8 @@ class LeftFrame:
                     new_recursive_object_name = name
 
             return self.recurse_over_app(new_recursive_object, new_recursive_object_name,
-                                         _index_possibly_given=index_possibly_given)
+                                         _index_possibly_given=index_possibly_given,
+                                         scaling_attribute=factors_of_scaling)
 
         elif object_name.lower() == "halfspace":
 

@@ -8,7 +8,8 @@ class Sphere:
     Class Representing a Sphere
     """
 
-    def __init__(self, position=None, radius=1.0, color=None, index=1, parent=None) -> None:
+    def __init__(self, position=None, radius=1.0, color=None, index=1, parent=None, translation=None, rotation=None,
+                 scaling=None) -> None:
         """
         Class representing a Sphere Object.
         :param position: (X, y, z) Example: [0, 0, 0]
@@ -32,3 +33,8 @@ class Sphere:
         self.color = color
         self.index = index
         self.parent = parent
+
+        # Special Attributes
+        self.translation = translation
+        self.rotation = rotation
+        self.scaling = scaling
