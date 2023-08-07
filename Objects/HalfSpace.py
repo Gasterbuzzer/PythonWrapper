@@ -33,5 +33,4 @@ class HalfSpace:
         self.normal = normal
         self.color = color
         self.index = index
-
         self.parent = parent
