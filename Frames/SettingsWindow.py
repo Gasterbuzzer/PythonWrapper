@@ -306,18 +306,18 @@ class SettingsWindow:
 
         # Save Buttons
         self.save_button_without_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes ",
-                                                                 command=self.update_object_with_new_data, width=150)
-        self.save_button_without_close.grid(row=current_row, column=0, padx=5, pady=(10, 0), sticky="sw")
+                                                                 command=self.update_object_with_new_data, width=200)
+        self.save_button_without_close.grid(row=current_row, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
 
         self.save_button_with_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes & Exit",
-                                                              command=self.save_and_close, width=150)
-        self.save_button_with_close.grid(row=current_row, column=1, padx=5, pady=(10, 0), sticky="sw", columnspan=4)
+                                                              command=self.save_and_close, width=200)
+        self.save_button_with_close.grid(row=current_row + 1, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
 
         self.close_without_saving_button = customtkinter.CTkButton(master=self.main_frame,
-                                                                   text="Exit & Discard Changes",
-                                                                   command=self.close_self, width=150)
-        self.close_without_saving_button.grid(row=current_row + 1, column=0, padx=5, pady=(10, 0),
-                                              sticky="sw", columnspan=4)
+                                                                   text="Exit & Discard Unsaved Changes",
+                                                                   command=self.close_self, width=200)
+        self.close_without_saving_button.grid(row=current_row + 2, column=0, padx=5, pady=(10, 0),
+                                              sticky="sw", columnspan=5)
 
         # Actually Running:
         self.toplevel.grab_set()
@@ -398,6 +398,8 @@ class SettingsWindow:
         Closes the current Window.
         """
 
+        print("Debug Log: Closing Settings Window.")
+
         # Label and Textbox for Position
         self.position_label.destroy()
         self.position_textbox_x.destroy()
@@ -448,5 +450,6 @@ class SettingsWindow:
         """
         Saves and closes the window.
         """
+
         self.update_object_with_new_data()
         self.close_self()

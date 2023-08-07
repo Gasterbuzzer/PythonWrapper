@@ -72,7 +72,9 @@ class ColorSettingsWindow:
         self.shininess_value = None
 
         # Save Button
-        self.save_button = None
+        self.save_button_without_close = None
+        self.save_button_with_close = None
+        self.close_without_saving_button = None
 
         # Function Pointer
         self.function_recurse_pointer = function_recurse_pointer
@@ -203,9 +205,19 @@ class ColorSettingsWindow:
                                                text_in_front="Shininess: ", pady=(20, 0))
 
         # Save Button
-        self.save_button = customtkinter.CTkButton(master=self.main_frame, text="Save Changes",
-                                                   command=self.save_colors)
-        self.save_button.grid(row=17, column=0, padx=5, pady=(10, 0), sticky="sw")
+        self.save_button_without_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes ",
+                                                                 command=self.save_colors, width=200)
+        self.save_button_without_close.grid(row=17, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
+
+        self.save_button_with_close = customtkinter.CTkButton(master=self.main_frame, text="Save Changes & Exit",
+                                                              command=self.save_and_close, width=200)
+        self.save_button_with_close.grid(row=18, column=0, padx=5, pady=(10, 0), sticky="sw", columnspan=5)
+
+        self.close_without_saving_button = customtkinter.CTkButton(master=self.main_frame,
+                                                                   text="Exit & Discard Unsaved Changes",
+                                                                   command=self.close_self, width=200)
+        self.close_without_saving_button.grid(row=19, column=0, padx=5, pady=(10, 0),
+                                              sticky="sw", columnspan=5)
 
         # Actually Running:
         self.toplevel.grab_set()
@@ -215,6 +227,8 @@ class ColorSettingsWindow:
         """
         Saves the given color changes to the object.
         """
+
+        print("Debug Log: Saving Colors.")
 
         self.ambient_values[0] = self.ambient_box_0.get_value()
         self.ambient_values[1] = self.ambient_box_1.get_value()
@@ -267,3 +281,66 @@ class ColorSettingsWindow:
 
         # If no object was found.
         # Let's hope that doesn't happen.
+
+    def close_self(self) -> None:
+        """
+        Closes the current Window. (Must be active beforehand)
+        """
+
+        # Ambient
+        self.ambient_label.destroy()
+        self.ambient_box_0.destroy()
+        self.ambient_box_1.destroy()
+        self.ambient_box_2.destroy()
+
+        # diffuse
+        self.diffuse_label.destroy()
+        self.diffuse_box_0.destroy()
+        self.diffuse_box_1.destroy()
+        self.diffuse_box_2.destroy()
+
+        # specular
+        self.specular_label.destroy()
+        self.specular_box_0.destroy()
+        self.specular_box_1.destroy()
+        self.specular_box_2.destroy()
+
+        # reflected
+        self.reflected_label.destroy()
+        self.reflected_box_0.destroy()
+        self.reflected_box_1.destroy()
+        self.reflected_box_2.destroy()
+
+        # refracted
+        self.refracted_label.destroy()
+        self.refracted_box_0.destroy()
+        self.refracted_box_1.destroy()
+        self.refracted_box_2.destroy()
+
+        # shininess
+        self.shininess_label.destroy()
+        self.shininess_box_0.destroy()
+
+        # Save Button
+        self.save_button_without_close.destroy()
+        self.save_button_with_close.destroy()
+        self.close_without_saving_button.destroy()
+
+        # Frame
+        self.main_frame.destroy()
+
+        # Window
+        self.toplevel.destroy()
+
+    def save_and_close(self) -> None:
+        """
+        Saves and closes the window.
+        """
+        self.save_colors()
+        self.close_self()
+
+    def destroy(self) -> None:
+        """
+        Similar to closing just an alias.
+        """
+        self.close_self()
