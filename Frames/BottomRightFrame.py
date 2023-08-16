@@ -314,7 +314,7 @@ class BottomRightFrame:
         json_values = self.get_json_object_from_hierarchy()
 
         # Writing
-        json.dump(json_values, json_file, indent=4)
+        json.dump(json_values, json_file, separators=(',', ': '), indent=4)
 
         # Finished Saving
         json_file.close()
