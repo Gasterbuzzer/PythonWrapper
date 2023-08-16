@@ -301,6 +301,8 @@ class BottomRightFrame:
         :return: (Str) Absolute Path to file.
         """
 
+        print("\nDebug Log: Starting saving prompt: ")
+
         # Request Input
         json_file = filedialog.asksaveasfile(initialdir=os.getcwd(), title="Select location to store changes to "
                                                                            "JSON File",
