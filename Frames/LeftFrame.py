@@ -92,7 +92,7 @@ class LeftFrame:
 
         # Find out the name
         if object_name == "NoNameGiven":
-            print(f"Found Unknown Object: {object_app}")
+            print(f"Debug Log: Found Unknown Object, finding out type of object: {object_app}.")
             for name in object_app.keys():
                 if debug:
                     print("Object Name: " + name + "\n")
