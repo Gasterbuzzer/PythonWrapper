@@ -257,7 +257,7 @@ class SettingsWindow:
                                                   text_in_front="Angle: ")
         self.rotation_textbox_1 = ScrollableEntry(master=self.main_frame,
                                                   placeholder_text=self.rotation[1], column=1, row=4,
-                                                  text_in_front="Direction: ")
+                                                  text_in_front="Dir.: ")
 
         # Scale
         self.scale_label = customtkinter.CTkLabel(self.main_frame, text="Scale: ", justify="center",
