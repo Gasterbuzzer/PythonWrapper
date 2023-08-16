@@ -284,14 +284,9 @@ class BottomRightFrame:
 
         print(f"Debug Log: Converting color of object to json." + self.useless)
 
-        json_to_create = {"color": {}}
-
-        json_to_create["color"]["ambient"] = color_object.ambient
-        json_to_create["color"]["diffuse"] = color_object.diffuse
-        json_to_create["color"]["specular"] = color_object.specular
-        json_to_create["color"]["reflected"] = color_object.reflected
-        json_to_create["color"]["refracted"] = color_object.refracted
-        json_to_create["color"]["shininess"] = color_object.shininess
+        json_to_create = {"ambient": color_object.ambient, "diffuse": color_object.diffuse,
+                          "specular": color_object.specular, "reflected": color_object.reflected,
+                          "refracted": color_object.refracted, "shininess": color_object.shininess}
 
         return json_to_create
 

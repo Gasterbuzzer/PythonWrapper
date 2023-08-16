@@ -436,7 +436,6 @@ class SettingsWindow:
                 # Rotation
                 self.rotation[0] = self.rotation_textbox_0.get_value()
                 self.rotation[1] = self.rotation_textbox_1.get_value()
-                self.rotation[2] = self.rotation_textbox_2.get_value()
 
                 if has_non_zero_element(self.rotation):
                     object_found.rotation = self.rotation

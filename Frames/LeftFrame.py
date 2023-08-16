@@ -123,7 +123,8 @@ class LeftFrame:
                 try:
                     color_ambient = color_json["ambient"]
                 except KeyError:
-                    print(f"Weak Error Log: Color Ambient for {object_app} {group_index} is not given.")
+                    print(f"Weak Error Log: Color Ambient for {object_app} {group_index} is not given. \n"
+                          f"What is color_json?: {color_json}")
                     color_ambient = None
                 try:
                     color_diffuse = color_json["diffuse"]
