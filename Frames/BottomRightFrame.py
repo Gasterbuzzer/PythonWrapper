@@ -108,12 +108,17 @@ class BottomRightFrame:
         :return: JSON object containing the hierarchy converted back.
         """
 
-        parent_json = {"test_value": 2}
+        # Base Information.
+        parent_json = {"screen": self.app.screen, "medium": self.app.medium, "objects": []}
+
+        if not self.app.sources:
+            parent_json["sources"] = self.app.sources
 
         for _object in self.app.hierarchy:
             json_object = self.recurse_over_object(_object)
 
-            parent_json.update(json_object)
+            # parent_json.update(json_object)
+            parent_json["objects"].append(json_object)
 
         return parent_json
 
@@ -125,10 +130,14 @@ class BottomRightFrame:
         """
         print(f"Debug Log: {object_to_recurse_over} being recurse over for saving. {self.useless}")
 
-        # Imports for type checking.
-        from Objects.Sphere import Sphere
+        # Extract the key
+        object_name = list(object_to_recurse_over.keys())[0]
 
-        if isinstance(object_to_recurse_over, Sphere):
+        # Extract the value
+        object_found = object_to_recurse_over[object_name]
+
+        if object_name.lower() == "sphere":
+            # extracting sphere info and writing it.
             return {"sphere": "Works!"}
 
         return {"test_value": "New Value"}
@@ -157,7 +166,7 @@ class BottomRightFrame:
         json_values = self.get_json_object_from_hierarchy()
 
         # Writing
-        json.dump(json_values, json_file)
+        json.dump(json_values, json_file, indent=4)
 
         # Finished Saving
         json_file.close()
