@@ -6,6 +6,7 @@ class TopRightFrame:
     """
     Top Right Frame Class
     """
+
     def __init__(self, main_menu_reference) -> None:
         """
         Top Right Frame Class (Settings for Image)
@@ -20,7 +21,6 @@ class TopRightFrame:
         self.frame.grid_propagate(False)
 
         # Select File Format
-        # Parent
 
         self.available_formats = ["PNG", "JPG"]
 
@@ -33,9 +33,14 @@ class TopRightFrame:
 
         self.format_select_box = customtkinter.CTkComboBox(self.frame,
                                                            values=self.available_formats, width=200, height=24,
-                                                           command=self.update_currently_selected_format)
+                                                           command=self.update_currently_selected_format,
+                                                           state="readonly")
         self.format_select_box.set(self.currently_selected_format)
         self.format_select_box.grid(row=1, column=0, padx=(5, 0), pady=(10, 0), columnspan=4)
+
+        # Generate image without saving
+
+        # Generate image and save.
 
     def update_currently_selected_format(self, event) -> None:
         """
