@@ -4,6 +4,7 @@ from tkinter import filedialog
 from PIL import Image
 import os
 import json
+from typing import Union, Any
 
 
 class BottomRightFrame:
@@ -96,6 +97,33 @@ class BottomRightFrame:
         self.app.left_frame.create_hierarchy()
         self.app.left_frame.render_frame_objects()
 
+    def get_json_object_from_hierarchy(self) -> dict:
+        """
+        Gets the current hierarchy and
+        converts it into json format.
+        Basically inverting the initial process.
+
+        :return: JSON object containing the hierarchy converted back.
+        """
+
+        parent_json = {"test_value": 2}
+
+        for _object in self.app.hierarchy:
+            json_object = self.recurse_over_object(_object)
+
+            parent_json.update(json_object)
+
+        return parent_json
+
+    def recurse_over_object(self, object_to_recurse_over) -> Union[Any, dict]:
+        """
+        Recurses over given obect and hopefully terminates at some point.
+
+        :return: JSON File containing
+        """
+
+        return {"test_value": "New Value"}
+
     def save_location_prompt(self) -> None:
         """
         Prompts the user for a location to store the
@@ -117,7 +145,7 @@ class BottomRightFrame:
             return
 
         # Getting write data
-        json_values = {"test_value": 2}
+        json_values = self.get_json_object_from_hierarchy()
 
         # Writing
         json.dump(json_values, json_file)
