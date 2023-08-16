@@ -172,7 +172,7 @@ class LeftFrame:
             if translate_attribute is None:
                 translate_attribute = [0, 0, 0]
             if rotate_attribute is None:
-                rotate_attribute = [0, 0, 0]
+                rotate_attribute = [0, 0]
             if scaling_attribute is None:
                 scaling_attribute = [0, 0, 0]
 
@@ -198,7 +198,7 @@ class LeftFrame:
             if translate_attribute is None:
                 translate_attribute = [0, 0, 0]
             if rotate_attribute is None:
-                rotate_attribute = [0, 0, 0]
+                rotate_attribute = [0, 0]
             if scaling_attribute is None:
                 scaling_attribute = [0, 0, 0]
 
@@ -226,7 +226,7 @@ class LeftFrame:
             if translate_attribute is None:
                 translate_attribute = [0, 0, 0]
             if rotate_attribute is None:
-                rotate_attribute = [0, 0, 0]
+                rotate_attribute = [0, 0]
             if scaling_attribute is None:
                 scaling_attribute = [0, 0, 0]
 
@@ -254,7 +254,7 @@ class LeftFrame:
             if translate_attribute is None:
                 translate_attribute = [0, 0, 0]
             if rotate_attribute is None:
-                rotate_attribute = [0, 0, 0]
+                rotate_attribute = [0, 0]
             if scaling_attribute is None:
                 scaling_attribute = [0, 0, 0]
 
@@ -283,8 +283,11 @@ class LeftFrame:
 
         elif object_name.lower() == "rotation":
 
+            factors_of_rotation = [0, 0]
+
             new_recursive_object = object_app["rotation"]["subject"]
-            factors_of_rotation = object_app["rotation"]["factors"]
+            factors_of_rotation[0] = object_app["rotation"]["angle"]
+            factors_of_rotation[1] = object_app["rotation"]["direction"]
 
             # Getting Object Name
             new_recursive_object_name = "NoNameFoundRecursive"
@@ -388,7 +391,7 @@ class LeftFrame:
             if translate_attribute is None:
                 translate_attribute = [0, 0, 0]
             if rotate_attribute is None:
-                rotate_attribute = [0, 0, 0]
+                rotate_attribute = [0, 0]
             if scaling_attribute is None:
                 scaling_attribute = [0, 0, 0]
 
