@@ -81,8 +81,10 @@ class TopRightFrame:
         if sys.platform.lower() == "linux" or sys.platform.lower() == "linux2":
             # Linux Command
             print("Debug Log: Platform has been identified as linux.")
+            print("Debug Log: Running image generation...")
             _subp = subprocess.Popen("ping www.google.com", shell=True, stdout=subprocess.PIPE).communicate()[0]
 
+            print("Debug Log: Image has been generated!")
             # Now you would technically get the image location and load it from there.
 
             # Simulating an image.
@@ -91,10 +93,16 @@ class TopRightFrame:
             image_ctk_b = customtkinter.CTkImage(background_image, size=(image_width, image_height))
 
             self.main_menu_reference.middle_right_frame.update_image(image=image_ctk_b)
+
+            print("Debug Log: Displaying generated image.")
 
         elif sys.platform.lower() == "windows" or sys.platform.lower() == "win32":
             print("Debug Log: Platform has been identified as windows.")
+
+            print("Debug Log: Running image generation...")
             _subp = subprocess.Popen("ping www.google.com", shell=True, stdout=subprocess.PIPE).communicate()[0]
+
+            print("Debug Log: Image has been generated!")
 
             # Now you would technically get the image location and load it from there.
 
@@ -104,6 +112,8 @@ class TopRightFrame:
             image_ctk_b = customtkinter.CTkImage(background_image, size=(image_width, image_height))
 
             self.main_menu_reference.middle_right_frame.update_image(image=image_ctk_b)
+
+            print("Debug Log: Displaying generated image.")
 
         else:
             print(f"Error Log: Unknown Platform {sys.platform}. Could not generate image, using fallback.")
@@ -113,6 +123,8 @@ class TopRightFrame:
             image_ctk_b = customtkinter.CTkImage(background_image, size=(image_width, image_height))
 
             self.main_menu_reference.middle_right_frame.update_image(image=image_ctk_b)
+
+            print("Debug Log: Displaying fallback image.")
 
 
 
