@@ -4,6 +4,7 @@ import customtkinter
 from Frames.CustomElements.scrollableentry import ScrollableEntry
 from Frames.ColorSettingsWindow import ColorSettingsWindow
 
+
 def has_non_zero_element(list_to_check: list) -> bool:
     """
     Checks if a list has a non-zero element.
@@ -156,7 +157,6 @@ class SettingsWindow:
         self.rotation_label = None
         self.rotation_textbox_0 = None
         self.rotation_textbox_1 = None
-        self.rotation_textbox_2 = None
         self.rotation = None
 
         # Scale
@@ -254,13 +254,10 @@ class SettingsWindow:
 
         self.rotation_textbox_0 = ScrollableEntry(master=self.main_frame,
                                                   placeholder_text=self.rotation[0], column=1, row=3,
-                                                  text_in_front="X: ")
+                                                  text_in_front="Angle: ")
         self.rotation_textbox_1 = ScrollableEntry(master=self.main_frame,
                                                   placeholder_text=self.rotation[1], column=1, row=4,
-                                                  text_in_front="Y: ")
-        self.rotation_textbox_2 = ScrollableEntry(master=self.main_frame,
-                                                  placeholder_text=self.rotation[2], column=1, row=5,
-                                                  text_in_front="Z: ", pady=(10, 0))
+                                                  text_in_front="Direction: ")
 
         # Scale
         self.scale_label = customtkinter.CTkLabel(self.main_frame, text="Scale: ", justify="center",

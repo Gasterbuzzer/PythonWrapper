@@ -230,14 +230,13 @@ class BottomRightFrame:
         elif object_name.lower() == "group":
             # extracting sphere info and writing it.
 
-            object_we_are_creating = {"halfSpace": {}}
+            object_we_are_creating = {object_found.special: []}
 
-            object_we_are_creating["halfSpace"]["position"] = object_found.position
-            object_we_are_creating["halfSpace"]["normal"] = object_found.normal
+            # Now we add the objects to the objects_we_are_creating
+            for _object in object_found.objects:
+                temp_json_object = self.recurse_over_object(_object)
 
-            object_we_are_creating["halfSpace"]["color"] = self.color_as_json(object_found.color)
-
-            object_we_are_creating["halfSpace"]["index"] = object_found.index
+                object_we_are_creating[object_found.special].append(temp_json_object)
 
             # Now we check the special stuff.
             # This will require special ordering
