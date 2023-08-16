@@ -24,6 +24,9 @@ class Group:
         self.rotation = rotation
         self.scaling = scaling
 
+        # Very special attribute
+        self.special = "union"
+
     def check_if_default(self, variable) -> bool:
         """
         Checks if a given parameter of a sphere is a default value.
