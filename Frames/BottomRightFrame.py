@@ -157,7 +157,7 @@ class BottomRightFrame:
             if debug:
                 print(f"\nDebug Log: {check_if_anything_hits}\n")
 
-            if check_if_anything_hits:
+            if not check_if_anything_hits:
                 if not object_found.check_if_default(object_found.translation, "translation"):
                     object_we_are_creating = \
                         {"translation":
@@ -203,7 +203,7 @@ class BottomRightFrame:
             check_if_anything_hits = (object_found.check_if_default(object_found.translation, "translation")
                                       and object_found.check_if_default(object_found.rotation, "rotation")
                                       and object_found.check_if_default(object_found.scaling, "scaling"))
-            if check_if_anything_hits:
+            if not check_if_anything_hits:
                 if not object_found.check_if_default(object_found.translation, "translation"):
                     object_we_are_creating = \
                         {"translation":
@@ -234,6 +234,7 @@ class BottomRightFrame:
 
         elif object_name.lower() == "group":
             # extracting sphere info and writing it.
+            print("\nDebug Log: Found Group, now looping through its objects.")
 
             object_we_are_creating = {object_found.special: []}
 
@@ -243,12 +244,13 @@ class BottomRightFrame:
 
                 object_we_are_creating[object_found.special].append(temp_json_object)
 
+            print("Debug Log: Finished looping through objects from group.\n")
             # Now we check the special stuff.
             # This will require special ordering
             check_if_anything_hits = (object_found.check_if_default(object_found.translation, "translation")
                                       and object_found.check_if_default(object_found.rotation, "rotation")
                                       and object_found.check_if_default(object_found.scaling, "scaling"))
-            if check_if_anything_hits:
+            if not check_if_anything_hits:
                 if not object_found.check_if_default(object_found.translation, "translation"):
                     object_we_are_creating = \
                         {"translation":
