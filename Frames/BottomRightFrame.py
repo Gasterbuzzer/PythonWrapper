@@ -74,7 +74,7 @@ class BottomRightFrame:
 
         # If the user did not select anything, we just state that no file was selected. Could be improved to
         # return the currently selected one.
-        print(f"File Location: '{json_location}'.")
+        print(f"Debug Log: File Location selected: '{json_location}'.")
         if json_location == "":
             self.app.file_location = ""
             self.label_location.configure(text="No file selected.")
