@@ -111,7 +111,7 @@ class BottomRightFrame:
         # If the user did not select anything, we just state that no file was selected.
         # Could be improved to
         # return the currently selected one.
-        print(f"File Location: '{json_file}'.")
+        print(f"Debug Log: (With objects {self.app.hierarchy}) File Location: '{json_file}'.")
         if json_file == "":
             print("Weak Error: Save Location is invalid or does not exist.")
             return
@@ -124,3 +124,5 @@ class BottomRightFrame:
 
         # Finished Saving
         json_file.close()
+
+        print("Debug Log: Successfully finished saving json file.\n")
