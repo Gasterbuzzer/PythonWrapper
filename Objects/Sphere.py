@@ -48,53 +48,54 @@ class Sphere:
         """
         print(f"Debug Log: {self} is checking for {name} if default.")
 
-        if name is "position":
+        if name == "position":
             if variable == [0, 0, 0]:
                 return True
             else:
                 return False
 
-        elif name is "radius":
+        elif name == "radius":
             if variable == 1.0:
                 return True
             else:
                 return False
 
-        elif name is "index":
+        elif name == "index":
             if variable == 1:
                 return True
             else:
                 return False
 
-        elif name is "parent":
+        elif name == "parent":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif name is "color":
+        elif name == "color":
             if variable == Color():
                 return True
             else:
                 return False
 
-        elif name is "translation":
+        elif name == "translation":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif name is "rotation":
+        elif name == "rotation":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif name is "scaling":
+        elif name == "scaling":
             if variable is None:
                 return True
             else:
                 return False
 
         else:
+            print(f"Medium Error: Cannot recognize {name} if it is part of the object.")
             return False

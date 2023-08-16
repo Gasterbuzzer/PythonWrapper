@@ -37,23 +37,24 @@ class Group:
 
         print(f"Debug Log: {self} is checking for {name} if default.")
 
-        if name is "translation":
+        if name == "translation":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif name is "rotation":
+        elif name == "rotation":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif name is "scaling":
+        elif name == "scaling":
             if variable is None:
                 return True
             else:
                 return False
 
         else:
+            print(f"Medium Error: Cannot recognize {name} if it is part of the object.")
             return False

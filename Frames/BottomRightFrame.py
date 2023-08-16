@@ -151,9 +151,9 @@ class BottomRightFrame:
 
             # Now we check the special stuff.
             # This will require special ordering
-            check_if_anything_hits = (object_found.check_if_default(object_found.translation)
-                                      and object_found.check_if_default(object_found.rotation)
-                                      and object_found.check_if_default(object_found.scaling))
+            check_if_anything_hits = (object_found.check_if_default(object_found.translation, "translation")
+                                      and object_found.check_if_default(object_found.rotation, "rotation")
+                                      and object_found.check_if_default(object_found.scaling, "scaling"))
             if debug:
                 print(f"\nDebug Log: {check_if_anything_hits}\n")
 
@@ -200,9 +200,9 @@ class BottomRightFrame:
 
             # Now we check the special stuff.
             # This will require special ordering
-            check_if_anything_hits = (object_found.check_if_default(object_found.translation)
-                                      and object_found.check_if_default(object_found.rotation)
-                                      and object_found.check_if_default(object_found.scaling))
+            check_if_anything_hits = (object_found.check_if_default(object_found.translation, "translation")
+                                      and object_found.check_if_default(object_found.rotation, "rotation")
+                                      and object_found.check_if_default(object_found.scaling, "scaling"))
             if check_if_anything_hits:
                 if not object_found.check_if_default(object_found.translation):
                     object_we_are_creating = \
@@ -245,9 +245,9 @@ class BottomRightFrame:
 
             # Now we check the special stuff.
             # This will require special ordering
-            check_if_anything_hits = (object_found.check_if_default(object_found.translation)
-                                      and object_found.check_if_default(object_found.rotation)
-                                      and object_found.check_if_default(object_found.scaling))
+            check_if_anything_hits = (object_found.check_if_default(object_found.translation, "translation")
+                                      and object_found.check_if_default(object_found.rotation, "rotation")
+                                      and object_found.check_if_default(object_found.scaling, "scaling"))
             if check_if_anything_hits:
                 if not object_found.check_if_default(object_found.translation):
                     object_we_are_creating = \
