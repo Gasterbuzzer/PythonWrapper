@@ -181,7 +181,54 @@ class BottomRightFrame:
                 # The object does not have any special attributes.
                 return object_we_are_creating
 
-        return {"test_value": "New Value"}
+        elif object_name.lower() == "halfspace":
+            # extracting sphere info and writing it.
+
+            object_we_are_creating = {"halfSpace": {}}
+
+            object_we_are_creating["halfSpace"]["position"] = object_found.position
+            object_we_are_creating["halfSpace"]["normal"] = object_found.normal
+
+            object_we_are_creating["halfSpace"]["color"] = self.color_as_json(object_found.color)
+
+            object_we_are_creating["halfSpace"]["index"] = object_found.index
+
+            # Now we check the special stuff.
+            # This will require special ordering
+            check_if_anything_hits = (object_found.check_if_default(object_found.translation)
+                                      and object_found.check_if_default(object_found.rotation)
+                                      and object_found.check_if_default(object_found.scaling))
+            if check_if_anything_hits:
+                if not object_found.check_if_default(object_found.translation):
+                    object_we_are_creating = \
+                        {"translation":
+                            {
+                                "factors": object_found.translation,
+                                "subject": object_we_are_creating
+                            }}
+
+                if not object_found.check_if_default(object_found.rotation):
+                    object_we_are_creating = \
+                        {"rotation":
+                            {
+                                "angle": object_found.rotation[0],
+                                "direction": object_found.rotation[1],
+                                "subject": object_we_are_creating
+                            }}
+                if not object_found.check_if_default(object_found.scaling):
+                    object_we_are_creating = \
+                        {"scaling":
+                            {
+                                "factors": object_found.scaling,
+                                "subject": object_we_are_creating
+                            }}
+                return object_we_are_creating
+            else:
+                # The object does not have any special attributes.
+                return object_we_are_creating
+            
+        else:
+            return {"test_value": "New Value"}
 
     def color_as_json(self, color_object) -> dict:
         """
