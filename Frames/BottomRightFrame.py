@@ -128,7 +128,7 @@ class BottomRightFrame:
 
         :return: JSON File containing
         """
-        debug = True
+        debug = False
 
         print(f"Debug Log: {object_to_recurse_over} being recurse over for saving. {self.useless}")
 
