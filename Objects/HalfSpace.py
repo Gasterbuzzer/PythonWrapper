@@ -84,19 +84,19 @@ class HalfSpace:
                 return False
 
         elif name == "translation":
-            if variable is None:
+            if variable == [0, 0, 0]:
                 return True
             else:
                 return False
 
         elif name == "rotation":
-            if variable is None:
+            if variable == [0, 0]:
                 return True
             else:
                 return False
 
         elif name == "scaling":
-            if variable is None:
+            if variable == [0, 0, 0]:
                 return True
             else:
                 return False

@@ -38,19 +38,19 @@ class Group:
         print(f"Debug Log: {self} is checking for {name} if default.")
 
         if name == "translation":
-            if variable is None:
+            if variable == [0, 0, 0]:
                 return True
             else:
                 return False
 
         elif name == "rotation":
-            if variable is None:
+            if variable == [0, 0]:
                 return True
             else:
                 return False
 
         elif name == "scaling":
-            if variable is None:
+            if variable == [0, 0, 0]:
                 return True
             else:
                 return False
