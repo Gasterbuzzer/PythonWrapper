@@ -18,6 +18,8 @@ class BottomRightFrame:
 
         :param main_menu_reference: Reference to Main Class (Not the Main Window)
         """
+        # Useless value to ignore static warning
+        self.useless = ""
 
         # References
         self.app = main_menu_reference
@@ -117,10 +119,17 @@ class BottomRightFrame:
 
     def recurse_over_object(self, object_to_recurse_over) -> Union[Any, dict]:
         """
-        Recurses over given obect and hopefully terminates at some point.
+        Recurse over given an object and hopefully terminates at some point.
 
         :return: JSON File containing
         """
+        print(f"Debug Log: {object_to_recurse_over} being recurse over for saving. {self.useless}")
+
+        # Imports for type checking.
+        from Objects.Sphere import Sphere
+
+        if isinstance(object_to_recurse_over, Sphere):
+            return {"sphere": "Works!"}
 
         return {"test_value": "New Value"}
 
@@ -140,7 +149,7 @@ class BottomRightFrame:
         # Could be improved to
         # return the currently selected one.
         print(f"Debug Log: (With objects {self.app.hierarchy}) File Location: '{json_file}'.")
-        if json_file == "":
+        if json_file == "" or json_file is None:
             print("Weak Error: Save Location is invalid or does not exist.")
             return
 
