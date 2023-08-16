@@ -138,9 +138,40 @@ class BottomRightFrame:
 
         if object_name.lower() == "sphere":
             # extracting sphere info and writing it.
-            return {"sphere": "Works!"}
+            object_we_are_creating = {object_name.lower(): {}}
+
+            object_we_are_creating[object_name.lower()]["position"] = object_found.position
+            object_we_are_creating[object_name.lower()]["radius"] = object_found.radius
+
+            object_we_are_creating[object_name.lower()]["color"] = self.color_as_json(object_found.color)
+
+            object_we_are_creating[object_name.lower()]["index"] = object_found.index
+
+            # Now we check the dangerous stuff.
+
+            return object_we_are_creating
 
         return {"test_value": "New Value"}
+
+    def color_as_json(self, color_object) -> dict:
+        """
+        Converts a color object to json format.
+        :param color_object: Object to convert.
+        :return: JSON Dictionary containing the information of the color object.
+        """
+
+        print(f"Debug Log: Converting color of object to json." + self.useless)
+
+        json_to_create = {"color": {}}
+
+        json_to_create["color"]["ambient"] = color_object.ambient
+        json_to_create["color"]["diffuse"] = color_object.diffuse
+        json_to_create["color"]["specular"] = color_object.specular
+        json_to_create["color"]["reflected"] = color_object.reflected
+        json_to_create["color"]["refracted"] = color_object.refracted
+        json_to_create["color"]["shininess"] = color_object.shininess
+
+        return json_to_create
 
     def save_location_prompt(self) -> None:
         """

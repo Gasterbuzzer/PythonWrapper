@@ -76,5 +76,23 @@ class Sphere:
             else:
                 return False
 
+        elif variable is self.translation:
+            if variable is None:
+                return True
+            else:
+                return False
+
+        elif variable is self.rotation:
+            if variable is None:
+                return True
+            else:
+                return False
+
+        elif variable is self.scaling:
+            if variable is None:
+                return True
+            else:
+                return False
+
         else:
             return False

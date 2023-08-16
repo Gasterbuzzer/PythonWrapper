@@ -23,3 +23,31 @@ class Group:
         self.translation = translation
         self.rotation = rotation
         self.scaling = scaling
+
+    def check_if_default(self, variable) -> bool:
+        """
+        Checks if a given parameter of a sphere is a default value.
+        :param variable: (Example: self . position) Must be a variable in sphere.
+        :return: True if default and false if not.
+        """
+
+        if variable is self.translation:
+            if variable is None:
+                return True
+            else:
+                return False
+
+        elif variable is self.rotation:
+            if variable is None:
+                return True
+            else:
+                return False
+
+        elif variable is self.scaling:
+            if variable is None:
+                return True
+            else:
+                return False
+
+        else:
+            return False
