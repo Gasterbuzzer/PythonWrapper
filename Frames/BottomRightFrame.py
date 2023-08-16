@@ -128,6 +128,8 @@ class BottomRightFrame:
 
         :return: JSON File containing
         """
+        debug = True
+
         print(f"Debug Log: {object_to_recurse_over} being recurse over for saving. {self.useless}")
 
         # Extract the key
@@ -152,6 +154,9 @@ class BottomRightFrame:
             check_if_anything_hits = (object_found.check_if_default(object_found.translation)
                                       and object_found.check_if_default(object_found.rotation)
                                       and object_found.check_if_default(object_found.scaling))
+            if debug:
+                print(f"\nDebug Log: {check_if_anything_hits}\n")
+
             if check_if_anything_hits:
                 if not object_found.check_if_default(object_found.translation):
                     object_we_are_creating = \

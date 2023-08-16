@@ -39,56 +39,58 @@ class Sphere:
         self.rotation = rotation
         self.scaling = scaling
 
-    def check_if_default(self, variable) -> bool:
+    def check_if_default(self, variable, name) -> bool:
         """
         Checks if a given parameter of a sphere is a default value.
         :param variable: (Example: self . position) Must be a variable in sphere.
+        :param name: Name/Variable Name of the variable to check.
         :return: True if default and false if not.
         """
+        print(f"Debug Log: {self} is checking for {name} if default.")
 
-        if variable is self.position:
+        if name is "position":
             if variable == [0, 0, 0]:
                 return True
             else:
                 return False
 
-        elif variable is self.radius:
+        elif name is "radius":
             if variable == 1.0:
                 return True
             else:
                 return False
 
-        elif variable is self.index:
+        elif name is "index":
             if variable == 1:
                 return True
             else:
                 return False
 
-        elif variable is self.parent:
+        elif name is "parent":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif variable is self.color:
+        elif name is "color":
             if variable == Color():
                 return True
             else:
                 return False
 
-        elif variable is self.translation:
+        elif name is "translation":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif variable is self.rotation:
+        elif name is "rotation":
             if variable is None:
                 return True
             else:
                 return False
 
-        elif variable is self.scaling:
+        elif name is "scaling":
             if variable is None:
                 return True
             else:
