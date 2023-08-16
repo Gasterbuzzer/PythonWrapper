@@ -158,7 +158,7 @@ class BottomRightFrame:
                 print(f"\nDebug Log: {check_if_anything_hits}\n")
 
             if check_if_anything_hits:
-                if not object_found.check_if_default(object_found.translation):
+                if not object_found.check_if_default(object_found.translation, "translation"):
                     object_we_are_creating = \
                         {"translation":
                             {
@@ -166,7 +166,7 @@ class BottomRightFrame:
                                 "subject": object_we_are_creating
                             }}
 
-                if not object_found.check_if_default(object_found.rotation):
+                if not object_found.check_if_default(object_found.rotation, "rotation"):
                     object_we_are_creating = \
                         {"rotation":
                             {
@@ -174,7 +174,7 @@ class BottomRightFrame:
                                 "direction": object_found.rotation[1],
                                 "subject": object_we_are_creating
                             }}
-                if not object_found.check_if_default(object_found.scaling):
+                if not object_found.check_if_default(object_found.scaling, "scaling"):
                     object_we_are_creating = \
                         {"scaling":
                             {
@@ -204,7 +204,7 @@ class BottomRightFrame:
                                       and object_found.check_if_default(object_found.rotation, "rotation")
                                       and object_found.check_if_default(object_found.scaling, "scaling"))
             if check_if_anything_hits:
-                if not object_found.check_if_default(object_found.translation):
+                if not object_found.check_if_default(object_found.translation, "translation"):
                     object_we_are_creating = \
                         {"translation":
                             {
@@ -212,7 +212,7 @@ class BottomRightFrame:
                                 "subject": object_we_are_creating
                             }}
 
-                if not object_found.check_if_default(object_found.rotation):
+                if not object_found.check_if_default(object_found.rotation, "rotation"):
                     object_we_are_creating = \
                         {"rotation":
                             {
@@ -220,7 +220,7 @@ class BottomRightFrame:
                                 "direction": object_found.rotation[1],
                                 "subject": object_we_are_creating
                             }}
-                if not object_found.check_if_default(object_found.scaling):
+                if not object_found.check_if_default(object_found.scaling, "scaling"):
                     object_we_are_creating = \
                         {"scaling":
                             {
@@ -249,7 +249,7 @@ class BottomRightFrame:
                                       and object_found.check_if_default(object_found.rotation, "rotation")
                                       and object_found.check_if_default(object_found.scaling, "scaling"))
             if check_if_anything_hits:
-                if not object_found.check_if_default(object_found.translation):
+                if not object_found.check_if_default(object_found.translation, "translation"):
                     object_we_are_creating = \
                         {"translation":
                             {
@@ -257,7 +257,7 @@ class BottomRightFrame:
                                 "subject": object_we_are_creating
                             }}
 
-                if not object_found.check_if_default(object_found.rotation):
+                if not object_found.check_if_default(object_found.rotation, "rotation"):
                     object_we_are_creating = \
                         {"rotation":
                             {
@@ -265,7 +265,7 @@ class BottomRightFrame:
                                 "direction": object_found.rotation[1],
                                 "subject": object_we_are_creating
                             }}
-                if not object_found.check_if_default(object_found.scaling):
+                if not object_found.check_if_default(object_found.scaling, "scaling"):
                     object_we_are_creating = \
                         {"scaling":
                             {
