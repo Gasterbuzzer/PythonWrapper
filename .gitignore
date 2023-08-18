@@ -1,2 +1,4 @@
 *.pyc
 test_files/cat.json
+data/generated/img.jpg
+data/generated/img.png

@@ -3,6 +3,9 @@ import customtkinter
 from PIL import Image
 import subprocess
 import sys
+from tkinter import filedialog
+import os
+import shutil
 
 
 class TopRightFrame:
@@ -52,6 +55,10 @@ class TopRightFrame:
 
         # Generate image and save.
 
+        self.save_button_without_close = customtkinter.CTkButton(master=self.frame, text="Generate Image\n&\nSave",
+                                                                 command=self.save_and_generate, width=150)
+        self.save_button_without_close.grid(row=0, column=2, padx=25, pady=(20, 0), rowspan=4)
+
     def update_currently_selected_format(self, event) -> None:
         """
         Updates the internal selection to newly selected format.
@@ -96,6 +103,12 @@ class TopRightFrame:
 
             print("Debug Log: Displaying generated image.")
 
+            # For now since we don't actually generate an image, we copy that
+            source_image_location = f"{os.getcwd()}\\data\\generated_2.jpg"
+            source_image_location_2 = f"{os.getcwd()}\\data\\img.{self.currently_selected_format.lower()}"
+
+            shutil.copyfile(source_image_location, source_image_location_2)
+
         elif sys.platform.lower() == "windows" or sys.platform.lower() == "win32":
             print("Debug Log: Platform has been identified as windows.")
 
@@ -115,6 +128,12 @@ class TopRightFrame:
 
             print("Debug Log: Displaying generated image.")
 
+            # For now since we don't actually generate an image, we copy that
+            source_image_location = f"{os.getcwd()}\\data\\generated\\generated_2.jpg"
+            source_image_location_2 = f"{os.getcwd()}\\data\\generated\\img.{self.currently_selected_format.lower()}"
+
+            shutil.copyfile(source_image_location, source_image_location_2)
+
         else:
             print(f"Error Log: Unknown Platform {sys.platform}. Could not generate image, using fallback.")
 
@@ -126,5 +145,39 @@ class TopRightFrame:
 
             print("Debug Log: Displaying fallback image.")
 
+    def save_and_generate(self) -> None:
+        """
+        Saves and generates an Image.
+        """
+        self.generate_image()
 
+        # Ask for Image save location.
 
+        print("Debug Log: Asking for save location.")
+
+        # Request Input
+        image_file_location = filedialog.asksaveasfilename(initialdir=os.getcwd(),
+                                                           title="Select location to store the generated "
+                                                                 "Image",
+
+                                                           filetypes=((self.currently_selected_format,
+                                                                       f"*.{self.currently_selected_format.lower()}"),
+                                                                      ("all files", "*.*")),
+
+                                                           defaultextension=f"."
+                                                                            f"{self.currently_selected_format.lower()}")
+
+        # If the user did not select anything, we just state that no file was selected.
+        # Could be improved to
+        # return the currently selected one.
+        print(f"Debug Log: Create Image at {image_file_location}.")
+        if image_file_location == "" or image_file_location is None:
+            print("Weak Error: Save Location is invalid or does not exist.")
+            return
+
+        # Copy generated image to new location:
+        # First we get the file name for later
+        filename = os.path.basename(image_file_location)
+        source_image_location = f"{os.getcwd()}\\data\\generated\\img.{self.currently_selected_format.lower()}"
+
+        shutil.copyfile(source_image_location, image_file_location)
