@@ -65,7 +65,7 @@ class TopRightFrame:
         :param event: Event when triggered
         """
 
-        print(f"Debug Log: Updated Image format to '{self.format_select_box.get()}'.")
+        print(f"Debug Log: Updated Image format to '{self.format_select_box.get()}' with event {event}.")
 
         self.currently_selected_format = self.format_select_box.get()
 
@@ -177,7 +177,7 @@ class TopRightFrame:
 
         # Copy generated image to new location:
         # First we get the file name for later
-        filename = os.path.basename(image_file_location)
+        # filename = os.path.basename(image_file_location)
         source_image_location = f"{os.getcwd()}\\data\\generated\\img.{self.currently_selected_format.lower()}"
 
         shutil.copyfile(source_image_location, image_file_location)

@@ -69,6 +69,8 @@ class HE:
         Opens the settings for the given object.
         :param event:
         """
+        print(f"Debug Log: Opening Settings with event {event}.")
+
         settings_window = SettingsWindow(self.object_reference, self.leftframe_class_reference.app.app,
                                          self.leftframe_class_reference)
         settings_window.open_window()
