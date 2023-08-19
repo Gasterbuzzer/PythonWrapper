@@ -26,6 +26,7 @@
     "objects": [
         {"sphere": {
             "position": [0, 0, 0],
+            "radius": 1.0,
             "color": {
                 "ambient": [1, 1, 1],
                 "diffuse": [1, 1, 1],
