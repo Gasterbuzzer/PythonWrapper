@@ -31,7 +31,7 @@ class TopRightFrame:
 
         # Select File Format
 
-        self.available_formats = ["PNG", "JPG"]
+        self.available_formats = ["PNG", "JPG", "PPM"]
 
         self.currently_selected_format = self.available_formats[0]
 
@@ -128,7 +128,7 @@ class TopRightFrame:
 
             print("Debug Log: Displaying generated image.")
 
-            # For now since we don't actually generate an image, we copy that
+            # For now, since we don't actually generate an image, we copy that
             source_image_location = f"{os.getcwd()}\\data\\generated\\generated_2.jpg"
             source_image_location_2 = f"{os.getcwd()}\\data\\generated\\img.{self.currently_selected_format.lower()}"
 
