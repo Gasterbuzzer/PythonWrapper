@@ -6,6 +6,7 @@ import sys
 from tkinter import filedialog
 import os
 import shutil
+import time
 
 
 class TopRightFrame:
@@ -84,55 +85,91 @@ class TopRightFrame:
             self.main_menu_reference.middle_right_frame.update_image()
             return
 
+        # We create the command:
+
+        os.environ['PYTHONIOENCODING'] = 'utf-8'
+
+        # Specify the path to the binary file
+        binary_path = os.path.abspath("../raytracing_c++/bin/run.exe")
+
+        # Specify the parameters you want to pass to the binary
+        # Old Output: "{os.path.abspath('../data/generated/')}/generated_2".replace("\\", "/")"
+        binary_parameters = [f"-j", f"{self.main_menu_reference.file_location}",
+                             f"-o", f"generated_2",
+                             f"-f", f"{self.currently_selected_format.lower()}"]
+
+        # Create the command by combining the binary path and parameters
+        command = [binary_path] + binary_parameters
+
+        # New Image location
+        image_location = os.path.abspath(f"../raytracing_c++/bin/generated_2.{self.currently_selected_format.lower()}")
+
+        print(f"Debug Log: Command to be executed: '{command}'")
+
         # We create the image from our c++ library/project.
         if sys.platform.lower() == "linux" or sys.platform.lower() == "linux2":
             # Linux Command
             print("Debug Log: Platform has been identified as linux.")
             print("Debug Log: Running image generation...")
-            _subp = subprocess.Popen("ping www.google.com", shell=True, stdout=subprocess.PIPE).communicate()[0]
+            _subp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-            print("Debug Log: Image has been generated!")
+            stdout, stderr = _subp.communicate()
+
+            # Check the return code to see if the process was successful (return code 0 usually indicates success)
+            return_code = _subp.returncode
+
+            print(f"Debug Log: Information: Output: '{stdout}'\nError: '{stderr}'\nReturnCode: '{return_code}'")
+
+            print("Debug Log: Image has hopefully been generated!")
             # Now you would technically get the image location and load it from there.
+            time.sleep(6)
 
-            # Simulating an image.
-            background_image = Image.open("data/generated/generated_2.jpg").resize((image_width, image_height))
+            # For now, since we don't actually generate an image, we copy that
+            source_image_location = os.path.abspath(f"generated_2.{self.currently_selected_format.lower()}")
+            source_image_location_2 = f"{os.getcwd()}\\data\\img.{self.currently_selected_format.lower()}"
+
+            shutil.copyfile(source_image_location, source_image_location_2)
+
+            # Opening the image "generated_2.jpg"
+            background_image = Image.open(source_image_location_2).resize((image_width, image_height))
 
             image_ctk_b = customtkinter.CTkImage(background_image, size=(image_width, image_height))
 
             self.main_menu_reference.middle_right_frame.update_image(image=image_ctk_b)
 
             print("Debug Log: Displaying generated image.")
-
-            # For now since we don't actually generate an image, we copy that
-            source_image_location = f"{os.getcwd()}\\data\\generated_2.jpg"
-            source_image_location_2 = f"{os.getcwd()}\\data\\img.{self.currently_selected_format.lower()}"
-
-            shutil.copyfile(source_image_location, source_image_location_2)
 
         elif sys.platform.lower() == "windows" or sys.platform.lower() == "win32":
             print("Debug Log: Platform has been identified as windows.")
 
             print("Debug Log: Running image generation...")
-            _subp = subprocess.Popen("ping www.google.com", shell=True, stdout=subprocess.PIPE).communicate()[0]
+            _subp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-            print("Debug Log: Image has been generated!")
+            stdout, stderr = _subp.communicate()
 
+            # Check the return code to see if the process was successful (return code 0 usually indicates success)
+            return_code = _subp.returncode
+
+            print(f"Debug Log: Information: Output: '{stdout}'\nError: '{stderr}'\nReturnCode: '{return_code}'")
+
+            print("Debug Log: Image has hopefully been generated!")
             # Now you would technically get the image location and load it from there.
+            time.sleep(6)
 
-            # Simulating an image.
-            background_image = Image.open("data/generated/generated_2.jpg").resize((image_width, image_height))
+            # For now, since we don't actually generate an image, we copy that
+            source_image_location = os.path.abspath(f"generated_2.{self.currently_selected_format.lower()}")
+            source_image_location_2 = f"{os.getcwd()}\\data\\img.{self.currently_selected_format.lower()}"
+
+            shutil.copyfile(source_image_location, source_image_location_2)
+
+            # Opening the image "generated_2.jpg"
+            background_image = Image.open(source_image_location_2).resize((image_width, image_height))
 
             image_ctk_b = customtkinter.CTkImage(background_image, size=(image_width, image_height))
 
             self.main_menu_reference.middle_right_frame.update_image(image=image_ctk_b)
 
             print("Debug Log: Displaying generated image.")
-
-            # For now, since we don't actually generate an image, we copy that
-            source_image_location = f"{os.getcwd()}\\data\\generated\\generated_2.jpg"
-            source_image_location_2 = f"{os.getcwd()}\\data\\generated\\img.{self.currently_selected_format.lower()}"
-
-            shutil.copyfile(source_image_location, source_image_location_2)
 
         else:
             print(f"Error Log: Unknown Platform {sys.platform}. Could not generate image, using fallback.")
@@ -149,7 +186,6 @@ class TopRightFrame:
         """
         Saves and generates an Image.
         """
-        self.generate_image()
 
         # Ask for Image save location.
 
@@ -174,6 +210,9 @@ class TopRightFrame:
         if image_file_location == "" or image_file_location is None:
             print("Weak Error: Save Location is invalid or does not exist.")
             return
+
+        # If we have the location given, we now run the program
+        self.generate_image()
 
         # Copy generated image to new location:
         # First we get the file name for later

@@ -142,12 +142,12 @@ class BottomRightFrame:
             # extracting sphere info and writing it.
             object_we_are_creating = {object_name.lower(): {}}
 
-            object_we_are_creating[object_name.lower()]["position"] = object_found.position
-            object_we_are_creating[object_name.lower()]["radius"] = object_found.radius
+            object_we_are_creating[object_name.lower()]["position"] = convert_all_to_float_list(object_found.position)
+            object_we_are_creating[object_name.lower()]["radius"] = float(object_found.radius)
 
             object_we_are_creating[object_name.lower()]["color"] = self.color_as_json(object_found.color)
 
-            object_we_are_creating[object_name.lower()]["index"] = object_found.index
+            object_we_are_creating[object_name.lower()]["index"] = int(object_found.index)
 
             # Now we check the special stuff.
             # This will require special ordering
@@ -162,7 +162,7 @@ class BottomRightFrame:
                     object_we_are_creating = \
                         {"translation":
                             {
-                                "factors": object_found.translation,
+                                "factors": convert_all_to_float_list(object_found.translation),
                                 "subject": object_we_are_creating
                             }}
 
@@ -170,15 +170,15 @@ class BottomRightFrame:
                     object_we_are_creating = \
                         {"rotation":
                             {
-                                "angle": object_found.rotation[0],
-                                "direction": object_found.rotation[1],
+                                "angle": float(object_found.rotation[0]),
+                                "direction": float(object_found.rotation[1]),
                                 "subject": object_we_are_creating
                             }}
                 if not object_found.check_if_default(object_found.scaling, "scaling"):
                     object_we_are_creating = \
                         {"scaling":
                             {
-                                "factors": object_found.scaling,
+                                "factors": convert_all_to_float_list(object_found.scaling),
                                 "subject": object_we_are_creating
                             }}
                 return object_we_are_creating
@@ -191,12 +191,12 @@ class BottomRightFrame:
 
             object_we_are_creating = {"halfSpace": {}}
 
-            object_we_are_creating["halfSpace"]["position"] = object_found.position
-            object_we_are_creating["halfSpace"]["normal"] = object_found.normal
+            object_we_are_creating["halfSpace"]["position"] = convert_all_to_float_list(object_found.position)
+            object_we_are_creating["halfSpace"]["normal"] = convert_all_to_float_list(object_found.normal)
 
             object_we_are_creating["halfSpace"]["color"] = self.color_as_json(object_found.color)
 
-            object_we_are_creating["halfSpace"]["index"] = object_found.index
+            object_we_are_creating["halfSpace"]["index"] = int(object_found.index)
 
             # Now we check the special stuff.
             # This will require special ordering
@@ -208,7 +208,7 @@ class BottomRightFrame:
                     object_we_are_creating = \
                         {"translation":
                             {
-                                "factors": object_found.translation,
+                                "factors": convert_all_to_float_list(object_found.translation),
                                 "subject": object_we_are_creating
                             }}
 
@@ -216,15 +216,15 @@ class BottomRightFrame:
                     object_we_are_creating = \
                         {"rotation":
                             {
-                                "angle": object_found.rotation[0],
-                                "direction": object_found.rotation[1],
+                                "angle": float(object_found.rotation[0]),
+                                "direction": float(object_found.rotation[1]),
                                 "subject": object_we_are_creating
                             }}
                 if not object_found.check_if_default(object_found.scaling, "scaling"):
                     object_we_are_creating = \
                         {"scaling":
                             {
-                                "factors": object_found.scaling,
+                                "factors": convert_all_to_float_list(object_found.scaling),
                                 "subject": object_we_are_creating
                             }}
                 return object_we_are_creating
@@ -255,7 +255,7 @@ class BottomRightFrame:
                     object_we_are_creating = \
                         {"translation":
                             {
-                                "factors": object_found.translation,
+                                "factors": convert_all_to_float_list(object_found.translation),
                                 "subject": object_we_are_creating
                             }}
 
@@ -263,15 +263,15 @@ class BottomRightFrame:
                     object_we_are_creating = \
                         {"rotation":
                             {
-                                "angle": object_found.rotation[0],
-                                "direction": object_found.rotation[1],
+                                "angle": float(object_found.rotation[0]),
+                                "direction": float(object_found.rotation[1]),
                                 "subject": object_we_are_creating
                             }}
                 if not object_found.check_if_default(object_found.scaling, "scaling"):
                     object_we_are_creating = \
                         {"scaling":
                             {
-                                "factors": object_found.scaling,
+                                "factors": convert_all_to_float_list(object_found.scaling),
                                 "subject": object_we_are_creating
                             }}
                 return object_we_are_creating
@@ -291,9 +291,12 @@ class BottomRightFrame:
 
         print(f"Debug Log: Converting color of object to json." + self.useless)
 
-        json_to_create = {"ambient": color_object.ambient, "diffuse": color_object.diffuse,
-                          "specular": color_object.specular, "reflected": color_object.reflected,
-                          "refracted": color_object.refracted, "shininess": color_object.shininess}
+        json_to_create = {"ambient": convert_all_to_float_list(color_object.ambient),
+                          "diffuse": convert_all_to_float_list(color_object.diffuse),
+                          "specular": convert_all_to_float_list(color_object.specular),
+                          "reflected": convert_all_to_float_list(color_object.reflected),
+                          "refracted": convert_all_to_float_list(color_object.refracted),
+                          "shininess": float(color_object.shininess)}
 
         return json_to_create
 
@@ -329,3 +332,16 @@ class BottomRightFrame:
         json_file.close()
 
         print("Debug Log: Successfully finished saving json file.\n")
+
+
+def convert_all_to_float_list(array_conversion: list) -> list:
+    """
+    Converts a list containing values to all be floats, this could be due to multiple reasons.
+    """
+
+    new_list = []
+
+    for e in array_conversion:
+        new_list.append(float(e))
+
+    return new_list
